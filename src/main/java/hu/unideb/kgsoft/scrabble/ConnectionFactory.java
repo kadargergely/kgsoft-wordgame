@@ -36,11 +36,7 @@ import static hu.unideb.kgsoft.scrabble.Main.logger;
 
 public class ConnectionFactory {   
     
-    private static ConnectionFactory factory = new ConnectionFactory();
-    
-    static final String DB_URL = "jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g";
-    static final String DB_USER = "H_AENX85";
-    static final String DB_PASSWD = "2481632";
+    private static ConnectionFactory factory = new ConnectionFactory();    
     
     private ConnectionFactory() {      
         try {            
@@ -53,23 +49,23 @@ public class ConnectionFactory {
     }
     
     private OracleConnection createConnection() throws IOException {        
-//        Properties prop = new Properties();
-//        InputStream inputStream = this.getClass().getResourceAsStream("/oracleUser.properties");
-//        
-//        if (inputStream != null) {
-//            prop.load(inputStream);
-//        } else {            
-//            throw new FileNotFoundException("property file 'oracleUser.properties' not found in the classpath");
-//        }
-//        
-//        String url = prop.getProperty("url");
-//        String user = prop.getProperty("user");
-//        String passwd = prop.getProperty("passwd");
+        Properties prop = new Properties();
+        InputStream inputStream = this.getClass().getResourceAsStream("/oracleUser.properties");
+        
+        if (inputStream != null) {
+            prop.load(inputStream);
+        } else {            
+            throw new FileNotFoundException();
+        }
+        
+        String url = prop.getProperty("url");        
+        String user = prop.getProperty("user");        
+        String passwd = prop.getProperty("passwd");        
         
         Connection connection = null;
         OracleConnection oraConn = null;
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            connection = DriverManager.getConnection(url, user, passwd);
             oraConn = connection.unwrap(OracleConnection.class);
             logger.info("Connection to the database created.");
         } catch (SQLException e) {

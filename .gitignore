@@ -3,3 +3,4 @@
 .settings/
 target/
 *.log
+src/main/resources/oracleUser.properties
