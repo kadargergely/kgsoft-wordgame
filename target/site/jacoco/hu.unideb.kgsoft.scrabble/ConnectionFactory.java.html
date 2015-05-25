@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConnectionFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble</a> &gt; <span class="el_source">ConnectionFactory.java</span></div><h1>ConnectionFactory.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import oracle.jdbc.OracleConnection;
+
+public class ConnectionFactory {
+    
+<span class="nc" id="L18">    private static Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);</span>
+    
+<span class="nc" id="L20">    private static ConnectionFactory factory = new ConnectionFactory();</span>
+    
+    static final String DB_URL = &quot;jdbc:oracle:thin:@db.inf.unideb.hu:1521:ora11g&quot;;
+    static final String DB_USER = &quot;H_AENX85&quot;;
+<span class="nc" id="L24">    static final String DB_PASSWD = &quot;2481632&quot;;</span>
+    
+<span class="nc" id="L26">    private ConnectionFactory() {      </span>
+        try {            
+<span class="nc" id="L28">            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());</span>
+<span class="nc" id="L29">            logger.info(&quot;Oracle JDBC driver successfully registered.&quot;);</span>
+<span class="nc" id="L30">        } catch (SQLException e) {</span>
+<span class="nc" id="L31">            logger.error(&quot;Couldn't register JDBC driver.&quot;);</span>
+<span class="nc" id="L32">            e.printStackTrace();         </span>
+        }
+<span class="nc" id="L34">    }</span>
+    
+    private OracleConnection createConnection() throws IOException {        
+//        Properties prop = new Properties();
+//        InputStream inputStream = this.getClass().getResourceAsStream(&quot;/oracleUser.properties&quot;);
+//        
+//        if (inputStream != null) {
+//            prop.load(inputStream);
+//        } else {            
+//            throw new FileNotFoundException(&quot;property file 'oracleUser.properties' not found in the classpath&quot;);
+//        }
+//        
+//        String url = prop.getProperty(&quot;url&quot;);
+//        String user = prop.getProperty(&quot;user&quot;);
+//        String passwd = prop.getProperty(&quot;passwd&quot;);
+        
+<span class="nc" id="L50">        Connection connection = null;</span>
+<span class="nc" id="L51">        OracleConnection oraConn = null;</span>
+        try {
+<span class="nc" id="L53">            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);</span>
+<span class="nc" id="L54">            oraConn = connection.unwrap(OracleConnection.class);</span>
+<span class="nc" id="L55">            logger.info(&quot;Connection to the database created.&quot;);</span>
+<span class="nc" id="L56">        } catch (SQLException e) {</span>
+<span class="nc" id="L57">            logger.error(String.format(&quot;Failed to create connection to the database: &quot;, e.getMessage()));</span>
+<span class="nc" id="L58">            e.printStackTrace();            </span>
+        }
+<span class="nc" id="L60">        return oraConn;</span>
+    }
+    
+    public static OracleConnection getConnection() throws IOException {
+<span class="nc" id="L64">        return factory.createConnection();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

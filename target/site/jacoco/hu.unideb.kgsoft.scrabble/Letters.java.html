@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Letters.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble</a> &gt; <span class="el_source">Letters.java</span></div><h1>Letters.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="nc" id="L7">public class Letters {</span>
+	
+<span class="fc" id="L9">	private static final String[] letters = {</span>
+<span class="fc" id="L10">		&quot;A&quot;, &quot;Á&quot;, &quot;B&quot;, &quot;C&quot;, &quot;CS&quot;, &quot;D&quot;, &quot;E&quot;, &quot;É&quot;, &quot;F&quot;, &quot;G&quot;, &quot;GY&quot;, &quot;H&quot;, &quot;I&quot;, &quot;Í&quot;, &quot;J&quot;, </span>
+<span class="fc" id="L11">		&quot;K&quot;, &quot;L&quot;, &quot;LY&quot;, &quot;M&quot;, &quot;N&quot;, &quot;NY&quot;, &quot;O&quot;, &quot;Ó&quot;, &quot;Ö&quot;, &quot;Ő&quot;, &quot;P&quot;, &quot;R&quot;, &quot;S&quot;, &quot;SZ&quot;, &quot;T&quot;, </span>
+<span class="fc" id="L12">		&quot;TY&quot;, &quot;U&quot;, &quot;Ú&quot;, &quot;Ü&quot;, &quot;Ű&quot;, &quot;V&quot;, &quot;Z&quot;, &quot;ZS&quot;, &quot;_&quot;</span>
+	};
+	private static final Map&lt;String, Integer&gt; letterNum;
+	static {
+<span class="fc" id="L16">		Map&lt;String, Integer&gt; tmpMap = new HashMap&lt;String, Integer&gt;();</span>
+<span class="fc" id="L17">		tmpMap.put(&quot;a&quot;, 0);		tmpMap.put(&quot;á&quot;, 1);		tmpMap.put(&quot;b&quot;, 2);</span>
+<span class="fc" id="L18">		tmpMap.put(&quot;c&quot;, 3);		tmpMap.put(&quot;cs&quot;, 4);	tmpMap.put(&quot;d&quot;, 5);</span>
+<span class="fc" id="L19">		tmpMap.put(&quot;e&quot;, 6);		tmpMap.put(&quot;é&quot;, 7);		tmpMap.put(&quot;f&quot;, 8);</span>
+<span class="fc" id="L20">		tmpMap.put(&quot;g&quot;, 9);		tmpMap.put(&quot;gy&quot;, 10);	tmpMap.put(&quot;h&quot;, 11);</span>
+<span class="fc" id="L21">		tmpMap.put(&quot;i&quot;, 12);	tmpMap.put(&quot;í&quot;, 13);	tmpMap.put(&quot;j&quot;, 14);</span>
+<span class="fc" id="L22">		tmpMap.put(&quot;k&quot;, 15);	tmpMap.put(&quot;l&quot;, 16);	tmpMap.put(&quot;ly&quot;, 17);</span>
+<span class="fc" id="L23">		tmpMap.put(&quot;m&quot;, 18);	tmpMap.put(&quot;n&quot;, 19);	tmpMap.put(&quot;ny&quot;, 20);</span>
+<span class="fc" id="L24">		tmpMap.put(&quot;o&quot;, 21);	tmpMap.put(&quot;ó&quot;, 22);	tmpMap.put(&quot;ö&quot;, 23);</span>
+<span class="fc" id="L25">		tmpMap.put(&quot;ő&quot;, 24);	tmpMap.put(&quot;p&quot;, 25);	tmpMap.put(&quot;r&quot;, 26);</span>
+<span class="fc" id="L26">		tmpMap.put(&quot;s&quot;, 27);	tmpMap.put(&quot;sz&quot;, 28);	tmpMap.put(&quot;t&quot;, 29);</span>
+<span class="fc" id="L27">		tmpMap.put(&quot;ty&quot;, 30);	tmpMap.put(&quot;u&quot;, 31);	tmpMap.put(&quot;ú&quot;, 32);</span>
+<span class="fc" id="L28">		tmpMap.put(&quot;ü&quot;, 33);	tmpMap.put(&quot;ű&quot;, 34);	tmpMap.put(&quot;v&quot;, 35);</span>
+<span class="fc" id="L29">		tmpMap.put(&quot;z&quot;, 36);	tmpMap.put(&quot;zs&quot;, 37);	tmpMap.put(&quot;_&quot;, 38);</span>
+		
+<span class="fc" id="L31">		letterNum = Collections.unmodifiableMap(tmpMap);</span>
+	}
+	
+	/**
+	 * The tile code of the joker tile.
+	 */
+	public static final int JOKER_CODE = 38;
+	
+<span class="fc" id="L39">	private static final int values[] = {</span>
+<span class="fc" id="L40">		1, 1, 2, 5, 7, 2, 1, 3, 4, 2, 4, 3, 1, 5, 4, 1, 1, 8, 1, 1, </span>
+<span class="fc" id="L41">		5, 1, 2, 4, 7, 4, 1, 1, 3, 1, 10, 4, 7, 4, 7, 3, 4, 8, 0</span>
+	};
+<span class="fc" id="L43">	private static final int quantities[] = {</span>
+<span class="fc" id="L44">		6, 4, 3, 1, 1, 3, 6, 3, 2, 3, 2, 2, 3, 1, 2, 6,</span>
+<span class="fc" id="L45">		4, 1, 3, 4, 1, 3, 3, 2, 1, 2, 4, 3, 2, 5, 1, 2,</span>
+<span class="fc" id="L46">		1, 2, 1, 2, 2, 1, 2</span>
+<span class="fc" id="L47">	};</span>
+	
+	public static String getL(int code) {
+		try {
+<span class="fc" id="L51">			return letters[code];</span>
+<span class="fc" id="L52">		} catch (IndexOutOfBoundsException ex) {</span>
+<span class="fc" id="L53">			return null;</span>
+		}
+	}
+	
+	public static int getC(String letter) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (letterNum.containsKey(letter)) {</span>
+<span class="fc" id="L59">			return letterNum.get(letter);</span>
+		} else {
+<span class="fc" id="L61">			return -1;</span>
+		}
+	}
+	
+	public static int getValue(int code) {
+		try {
+<span class="fc" id="L67">			return values[code];</span>
+<span class="nc" id="L68">		} catch (IndexOutOfBoundsException ex) {</span>
+<span class="nc" id="L69">			return -1;</span>
+		}
+	}
+	
+	public static int getValue(String letter) {
+		try {
+<span class="nc" id="L75">			return values[getC(letter)];</span>
+<span class="nc" id="L76">		} catch (IndexOutOfBoundsException ex) {</span>
+<span class="nc" id="L77">			return -1;</span>
+		}
+	}
+	
+	public static int getQuantity(int code) {		
+<span class="fc" id="L82">		return quantities[code];	</span>
+	}
+	
+	public static int getQuantity(String letter) {		
+<span class="nc" id="L86">		return quantities[getC(letter)];		</span>
+	}
+	
+	public static int getNum() {
+<span class="fc" id="L90">		return letters.length;</span>
+	}	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

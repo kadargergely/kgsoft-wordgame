@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Gameboard.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble</a> &gt; <span class="el_source">Gameboard.java</span></div><h1>Gameboard.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Gameboard {
+
+    /**
+     * The number of fields in a row or column.
+     */
+    public static final int BOARD_SIZE = 15;
+    /**
+     * Two dimensional array of &lt;code&gt;Field&lt;/code&gt; objects, describing the game
+     * board.
+     */
+    private Field[][] board;
+    /**
+     * The number of tiles that were placed on the board in the current turn.
+     */
+    private int movableTiles;
+
+    /**
+     * Constructs a &lt;code&gt;Gameboard&lt;/code&gt; object and initializes its two
+     * dimensional array of &lt;code&gt;Field&lt;/code&gt; objects.
+     */
+<span class="fc" id="L26">    public Gameboard() {</span>
+<span class="fc" id="L27">        board = new Field[BOARD_SIZE][BOARD_SIZE];</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc" id="L30">                board[i][j] = new Field();</span>
+            }
+        }
+
+<span class="fc" id="L34">        movableTiles = 0;</span>
+
+<span class="fc" id="L36">        board[0][0].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L37">        board[0][7].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L38">        board[0][14].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L39">        board[7][0].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L40">        board[14][0].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L41">        board[7][14].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L42">        board[14][14].setMultiplier(Field.Multiplier.TWORD);</span>
+<span class="fc" id="L43">        board[14][7].setMultiplier(Field.Multiplier.TWORD);</span>
+
+<span class="fc" id="L45">        board[1][1].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L46">        board[2][2].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L47">        board[3][3].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L48">        board[4][4].setMultiplier(Field.Multiplier.DWORD);</span>
+
+<span class="fc" id="L50">        board[1][13].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L51">        board[2][12].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L52">        board[3][11].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L53">        board[4][10].setMultiplier(Field.Multiplier.DWORD);</span>
+
+<span class="fc" id="L55">        board[13][1].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L56">        board[12][2].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L57">        board[11][3].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L58">        board[10][4].setMultiplier(Field.Multiplier.DWORD);</span>
+
+<span class="fc" id="L60">        board[10][10].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L61">        board[11][11].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L62">        board[12][12].setMultiplier(Field.Multiplier.DWORD);</span>
+<span class="fc" id="L63">        board[13][13].setMultiplier(Field.Multiplier.DWORD);</span>
+
+<span class="fc" id="L65">        board[7][7].setMultiplier(Field.Multiplier.DWORD);</span>
+
+<span class="fc" id="L67">        board[1][5].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L68">        board[1][9].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L69">        board[5][1].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L70">        board[5][5].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L71">        board[5][9].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L72">        board[5][13].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L73">        board[9][1].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L74">        board[9][5].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L75">        board[9][9].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L76">        board[9][13].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L77">        board[13][5].setMultiplier(Field.Multiplier.TLETTER);</span>
+<span class="fc" id="L78">        board[13][9].setMultiplier(Field.Multiplier.TLETTER);</span>
+
+<span class="fc" id="L80">        board[0][3].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L81">        board[0][11].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L82">        board[14][3].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L83">        board[14][11].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L84">        board[3][0].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L85">        board[11][0].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L86">        board[3][14].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L87">        board[11][14].setMultiplier(Field.Multiplier.DLETTER);</span>
+
+<span class="fc" id="L89">        board[2][6].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L90">        board[2][8].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L91">        board[3][7].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L92">        board[6][2].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L93">        board[8][2].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L94">        board[7][3].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L95">        board[6][12].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L96">        board[8][12].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L97">        board[7][11].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L98">        board[12][6].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L99">        board[12][8].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L100">        board[11][7].setMultiplier(Field.Multiplier.DLETTER);</span>
+
+<span class="fc" id="L102">        board[6][6].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L103">        board[8][8].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L104">        board[6][8].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L105">        board[8][6].setMultiplier(Field.Multiplier.DLETTER);</span>
+<span class="fc" id="L106">    }</span>
+    
+<span class="nc" id="L108">    public Gameboard(Field[][] fields) {</span>
+<span class="nc" id="L109">        board = fields;</span>
+<span class="nc" id="L110">        movableTiles = 0;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                if (board[i][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="nc" id="L114">                    movableTiles++;</span>
+                }
+            }
+        }
+<span class="nc" id="L118">    }</span>
+
+    /**
+     * If it is possible, places a tile at the given position on the board, with
+     * a given tile code. If the tile is a joker, use the
+     * &lt;code&gt;setJokerTile&lt;/code&gt; method instead.
+     * 
+     * @param row
+     *            the row index where the tile should be placed
+     * @param col
+     *            the column index where the tile should be placed
+     * @param code
+     *            the code of the tile
+     * @return &lt;code&gt;true&lt;/code&gt; if the tile has been successfully placed on the
+     *         board, &lt;code&gt;false&lt;/code&gt; otherwise
+     */
+    public boolean setTile(int row, int col, int code) {
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L136">            board[row][col].setTileCode(code);</span>
+<span class="fc" id="L137">            board[row][col].setStatus(Field.Status.MOVABLE);</span>
+<span class="fc" id="L138">            movableTiles++;</span>
+<span class="fc" id="L139">            return true;</span>
+        } else {
+<span class="fc" id="L141">            return false;</span>
+        }
+    }
+
+    /**
+     * If it is possible, places a joker at the given position, replacing the
+     * given tile code.
+     * 
+     * @param row
+     *            the row index where the tile should be placed
+     * @param col
+     *            the column index where the tile should be placed
+     * @param code
+     *            the code of the tile that is replaced by the joker
+     * @return &lt;code&gt;true&lt;/code&gt; if the tile has been successfully placed on the
+     *         board, &lt;code&gt;false&lt;/code&gt; otherwise
+     */
+    public boolean setJokerTile(int row, int col, int code) {
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L160">            board[row][col].setTileCode(Letters.JOKER_CODE);</span>
+<span class="fc" id="L161">            board[row][col].setJokerTileCode(code);</span>
+<span class="fc" id="L162">            board[row][col].setStatus(Field.Status.MOVABLE);</span>
+<span class="fc" id="L163">            movableTiles++;</span>
+<span class="fc" id="L164">            return true;</span>
+        } else {
+<span class="fc" id="L166">            return false;</span>
+        }
+    }
+
+    /**
+     * Returns the tile code of the field with the given row and column indices,
+     * if the tile is movable, regarding the rules, and sets its value to
+     * {@code Field.NOTILE}.
+     * 
+     * @param row
+     *            the row index from where the tile should be removed
+     * @param col
+     *            the column index from where the tile should be removed
+     * @return the tile code of the tile picked up, or the
+     *         &lt;code&gt;Field.NOTILE&lt;/code&gt; constant if there was no tile on the
+     *         field
+     */
+    public int pickUpTile(int row, int col) {
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (board[row][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L185">            int code = board[row][col].getTileCode();</span>
+<span class="fc" id="L186">            board[row][col].setTileCode(Field.NOTILE);</span>
+<span class="fc" id="L187">            board[row][col].setJokerTileCode(Field.NOTILE);</span>
+<span class="fc" id="L188">            board[row][col].setStatus(Field.Status.EMPTY);</span>
+<span class="fc" id="L189">            movableTiles--;</span>
+<span class="fc" id="L190">            return code;</span>
+        } else {
+<span class="fc" id="L192">            return Field.NOTILE;</span>
+        }
+    }
+
+    /**
+     * Checks if the disposal of the tiles on the board allows the player to end
+     * his turn, regarding the rules. The method needs to know that the game is
+     * in the first turn, or not, because that is a special case.
+     * 
+     * @param firstTurn
+     *            &lt;code&gt;true&lt;/code&gt; if the game is in the first turn
+     * @return &lt;code&gt;true&lt;/code&gt; if the state of the board matches the above
+     *         condition, &lt;code&gt;false&lt;/code&gt; otherwise
+     */
+    public boolean isLegal(boolean firstTurn) {
+        // TODO debug
+        // for (int i = 0; i &lt; BOARD_SIZE; i++) {
+        // for (int j = 0; j &lt; BOARD_SIZE; j++) {
+        // System.out.format(&quot;%10s&quot;, board[i][j].getStatus());
+        // }
+        // System.out.println();
+        // }
+        // System.out.println();        
+
+<span class="fc" id="L216">        int row = -1, col = -1;</span>
+<span class="fc" id="L217">        boolean found = false;</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                if (board[i][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L221">                    row = i;</span>
+<span class="fc" id="L222">                    col = j;</span>
+<span class="fc" id="L223">                    found = true;</span>
+<span class="fc" id="L224">                    break;</span>
+                }
+            }
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (found)</span>
+<span class="fc" id="L228">                break;</span>
+        }
+
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (found) {</span>
+<span class="fc" id="L232">            boolean connected = false;</span>
+
+<span class="fc" id="L234">            int tilesInRow = 0;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            for (int j = col; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">                if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L237">                    tilesInRow++;</span>
+                }
+            }
+
+<span class="fc" id="L241">            int tilesInCol = 0;</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            for (int i = row; i &lt; BOARD_SIZE; i++) {</span>
+
+<span class="fc bfc" id="L244" title="All 2 branches covered.">                if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L245">                    tilesInCol++;</span>
+                }
+            }
+            // TODO debug
+            // System.out.println(&quot;Row : &quot; + row);
+            // System.out.println(&quot;Col: &quot; + col);
+            //
+            // System.out.println(&quot;Tiles in row : &quot; + tilesInRow);
+            // System.out.println(&quot;Tiles in col : &quot; + tilesInCol);
+
+<span class="fc bfc" id="L255" title="All 2 branches covered.">            if (tilesInRow &gt; 1) {</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">                if (tilesInRow &lt; movableTiles) {</span>
+<span class="fc" id="L257">                    return false;</span>
+                } else {
+<span class="fc" id="L259">                    int connectedTiles = 0;</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">                    for (int j = col; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">                        if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L262">                            break;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">                        } else if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L264">                            connectedTiles++;</span>
+                        }
+<span class="fc bfc" id="L266" title="All 4 branches covered.">                        if (!connected &amp;&amp; !firstTurn) {</span>
+<span class="pc bpc" id="L267" title="2 of 4 branches missed.">                            if ((row &gt; 0 &amp;&amp; board[row - 1][j].getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">                                    || (row &lt; BOARD_SIZE - 1 &amp;&amp; board[row + 1][j]</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">                                            .getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L270" title="1 of 4 branches missed.">                                    || (j &gt; 0 &amp;&amp; board[row][j - 1].getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">                                    || (j &lt; BOARD_SIZE - 1 &amp;&amp; board[row][j + 1]</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">                                            .getStatus() == Field.Status.FIXED)) {</span>
+<span class="fc" id="L273">                                connected = true;</span>
+                            }
+                        }
+                    }
+<span class="fc bfc" id="L277" title="All 2 branches covered.">                    if (connectedTiles &lt; movableTiles) {</span>
+<span class="fc" id="L278">                        return false;</span>
+                    }
+                }
+
+<span class="fc bfc" id="L282" title="All 2 branches covered.">            } else if (tilesInCol &gt; 1) {</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">                if (tilesInCol &lt; movableTiles) {</span>
+<span class="nc" id="L284">                    return false;</span>
+                } else {
+<span class="fc" id="L286">                    int connectedTiles = 0;</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">                    for (int i = row; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">                        if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L289">                            break;</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">                        } else if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L291">                            connectedTiles++;</span>
+                        }
+<span class="pc bpc" id="L293" title="1 of 4 branches missed.">                        if (!connected &amp;&amp; !firstTurn) {</span>
+<span class="pc bpc" id="L294" title="2 of 4 branches missed.">                            if ((col &gt; 0 &amp;&amp; board[i][col - 1].getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">                                    || (col &lt; BOARD_SIZE - 1 &amp;&amp; board[i][col + 1]</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">                                            .getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L297" title="2 of 4 branches missed.">                                    || (i &gt; 0 &amp;&amp; board[i - 1][col].getStatus() == Field.Status.FIXED)</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">                                    || (i &lt; BOARD_SIZE - 1 &amp;&amp; board[i + 1][col]</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">                                            .getStatus() == Field.Status.FIXED)) {</span>
+<span class="fc" id="L300">                                connected = true;</span>
+                            }
+                        }
+                    }
+<span class="fc bfc" id="L304" title="All 2 branches covered.">                    if (connectedTiles &lt; movableTiles) {</span>
+<span class="fc" id="L305">                        return false;</span>
+                    }
+                }
+
+<span class="fc bfc" id="L309" title="All 2 branches covered.">            } else if (movableTiles &gt; 1) {</span>
+<span class="fc" id="L310">                return false;</span>
+
+            } else {
+<span class="pc bpc" id="L313" title="2 of 4 branches missed.">                if (!connected &amp;&amp; !firstTurn) {</span>
+<span class="nc bnc" id="L314" title="All 4 branches missed.">                    if ((col &gt; 0 &amp;&amp; board[row][col - 1].getStatus() == Field.Status.FIXED)</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">                            || (col &lt; BOARD_SIZE - 1 &amp;&amp; board[row][col + 1]</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">                                    .getStatus() == Field.Status.FIXED)</span>
+<span class="nc bnc" id="L317" title="All 4 branches missed.">                            || (row &gt; 0 &amp;&amp; board[row - 1][col].getStatus() == Field.Status.FIXED)</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">                            || (row &lt; BOARD_SIZE - 1 &amp;&amp; board[row + 1][col]</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">                                    .getStatus() == Field.Status.FIXED)) {</span>
+<span class="nc" id="L320">                        connected = true;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L324" title="All 4 branches covered.">            if (!connected &amp;&amp; !firstTurn) {</span>
+<span class="fc" id="L325">                return false;</span>
+            }
+<span class="fc bfc" id="L327" title="All 4 branches covered.">            if (firstTurn &amp;&amp; board[7][7].getStatus() != Field.Status.MOVABLE) {</span>
+<span class="fc" id="L328">                return false;</span>
+            }
+        } else {
+<span class="fc" id="L331">            return false;</span>
+        }
+
+<span class="fc" id="L334">        return true;</span>
+    }
+
+    /**
+     * Reads a word horizontally, starting from the given position. It is called
+     * by the public method &lt;code&gt;getPlayedWords&lt;/code&gt;.
+     * 
+     * @param row
+     *            the row index of the starting position
+     * @param col
+     *            the column index of the starting position
+     * @return the word read, or &lt;code&gt;null&lt;/code&gt; if there is no tile on the
+     *         starting position
+     */
+    private String readRowWord(int row, int col) {
+<span class="fc" id="L349">        int startCol = 0;</span>
+<span class="fc" id="L350">        StringBuilder word = new StringBuilder();</span>
+
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="nc" id="L353">            return null;</span>
+        }
+
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">        for (int j = col; j &gt;= 0; j--) {</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L358">                startCol = j + 1;</span>
+<span class="fc" id="L359">                break;</span>
+            }
+        }
+
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">        for (int j = startCol; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L365">                break;</span>
+            }
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">            if (board[row][j].getTileCode() != Letters.JOKER_CODE) {</span>
+<span class="fc" id="L368">                word.append(Letters.getL(board[row][j].getTileCode()));</span>
+<span class="fc" id="L369">            } else {</span>
+<span class="nc" id="L370">                word.append(Letters.getL(board[row][j].getJokerTileCode()));</span>
+            }            
+        }
+
+<span class="fc" id="L374">        return word.toString();</span>
+    }
+
+    /**
+     * Reads a word vertically, starting from the given position. It is called
+     * by the public method &lt;code&gt;getPlayedWords&lt;/code&gt;.
+     * 
+     * @param row
+     *            the row index of the starting position
+     * @param col
+     *            the column index of the starting position
+     * @return the word read, or &lt;code&gt;null&lt;/code&gt; if there is no tile on the
+     *         starting position
+     */
+    private String readColWord(int row, int col) {
+<span class="fc" id="L389">        int startRow = 0;</span>
+<span class="fc" id="L390">        StringBuilder word = new StringBuilder();</span>
+
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="nc" id="L393">            return null;</span>
+        }
+
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">        for (int i = row; i &gt;= 0; i--) {</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L398">                startRow = i + 1;</span>
+<span class="fc" id="L399">                break;</span>
+            }
+        }
+
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">        for (int i = startRow; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L405">                break;</span>
+            }
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">            if (board[i][col].getTileCode() != Letters.JOKER_CODE) {</span>
+<span class="fc" id="L408">                word.append(Letters.getL(board[i][col].getTileCode()));</span>
+<span class="fc" id="L409">            } else {</span>
+<span class="nc" id="L410">                word.append(Letters.getL(board[i][col].getJokerTileCode()));</span>
+            }
+        }
+
+<span class="fc" id="L414">        return word.toString();</span>
+    }
+
+    /**
+     * Returns a list of the words played in the current turn. The method
+     * assumes that the state of the board allows the player to end his turn
+     * regarding the rules, i.e. the &lt;code&gt;isLegal&lt;/code&gt; method returns
+     * &lt;code&gt;true&lt;/code&gt;, otherwise the return value will be undefined.
+     * 
+     * @return a list of strings containing the words played in the current
+     *         turn, or &lt;code&gt;null&lt;/code&gt; if there were no words played in the
+     *         current turn
+     */
+    public List&lt;String&gt; getPlayedWords() {
+
+<span class="fc" id="L429">        int col = -1, row = -1;</span>
+<span class="fc" id="L430">        List&lt;String&gt; playedWords = new ArrayList&lt;String&gt;();</span>
+
+<span class="fc" id="L432">        boolean found = false;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">                if (board[i][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L436">                    row = i;</span>
+<span class="fc" id="L437">                    col = j;</span>
+<span class="fc" id="L438">                    found = true;</span>
+<span class="fc" id="L439">                    break;</span>
+                }
+            }
+<span class="fc bfc" id="L442" title="All 2 branches covered.">            if (found) {</span>
+<span class="fc" id="L443">                break;</span>
+            }
+        }
+
+<span class="fc bfc" id="L447" title="All 2 branches covered.">        if (!found) {</span>
+<span class="fc" id="L448">            return null;</span>
+        }
+
+<span class="fc" id="L451">        boolean tilesInRow = false;</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">        for (int j = col + 1; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L454">                tilesInRow = true;</span>
+<span class="fc" id="L455">                break;</span>
+            }
+        }
+<span class="fc" id="L458">        boolean tilesInCol = false;</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">        for (int i = row + 1; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L461">                tilesInCol = true;</span>
+<span class="fc" id="L462">                break;</span>
+            }
+        }
+
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (tilesInRow) {</span>
+<span class="fc" id="L467">            playedWords.add(readRowWord(row, col));</span>
+<span class="pc bpc" id="L468" title="1 of 2 branches missed.">            for (int j = col; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">                if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L470">                    break;</span>
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">                } else if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L472">                    String w = readColWord(row, j);</span>
+<span class="fc bfc" id="L473" title="All 2 branches covered.">                    if (w.length() &gt; 1</span>
+<span class="pc bpc" id="L474" title="1 of 4 branches missed.">                            &amp;&amp; !(w.equals(&quot;CS&quot;) || w.equals(&quot;GY&quot;)</span>
+<span class="pc bpc" id="L475" title="2 of 4 branches missed.">                                    || w.equals(&quot;LY&quot;) || w.equals(&quot;NY&quot;)</span>
+<span class="pc bpc" id="L476" title="2 of 4 branches missed.">                                    || w.equals(&quot;SZ&quot;) || w.equals(&quot;TY&quot;) || w</span>
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">                                        .equals(&quot;ZS&quot;))) {</span>
+<span class="fc" id="L478">                        playedWords.add(w);</span>
+                    }
+                }
+            }
+<span class="pc bfc" id="L482" title="All 2 branches covered.">        } else if (tilesInCol) {</span>
+<span class="fc" id="L483">            playedWords.add(readColWord(row, col));</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">            for (int i = row; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">                if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L486">                    break;</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">                } else if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L488">                    String w = readRowWord(i, col);</span>
+<span class="fc bfc" id="L489" title="All 2 branches covered.">                    if (w.length() &gt; 1</span>
+<span class="pc bpc" id="L490" title="1 of 4 branches missed.">                            &amp;&amp; !(w.equals(&quot;CS&quot;) || w.equals(&quot;GY&quot;)</span>
+<span class="pc bpc" id="L491" title="2 of 4 branches missed.">                                    || w.equals(&quot;LY&quot;) || w.equals(&quot;NY&quot;)</span>
+<span class="pc bpc" id="L492" title="2 of 4 branches missed.">                                    || w.equals(&quot;SZ&quot;) || w.equals(&quot;TY&quot;) || w</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                                        .equals(&quot;ZS&quot;))) {</span>
+<span class="fc" id="L494">                        playedWords.add(w);</span>
+                    }
+                }
+            }
+<span class="nc" id="L498">        } else {</span>
+<span class="fc" id="L499">            String rowWord = readRowWord(row, col);</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">            if (rowWord.length() &gt; 1</span>
+<span class="pc bpc" id="L501" title="2 of 4 branches missed.">                    &amp;&amp; !(rowWord.equals(&quot;CS&quot;) || rowWord.equals(&quot;GY&quot;)</span>
+<span class="pc bpc" id="L502" title="2 of 4 branches missed.">                            || rowWord.equals(&quot;LY&quot;) || rowWord.equals(&quot;NY&quot;)</span>
+<span class="pc bpc" id="L503" title="2 of 4 branches missed.">                            || rowWord.equals(&quot;SZ&quot;) || rowWord.equals(&quot;TY&quot;) || rowWord</span>
+<span class="pc bpc" id="L504" title="1 of 2 branches missed.">                                .equals(&quot;ZS&quot;))) {</span>
+<span class="fc" id="L505">                playedWords.add(rowWord);</span>
+            }
+<span class="fc" id="L507">            String colWord = readColWord(row, col);</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">            if (colWord.length() &gt; 1</span>
+<span class="pc bpc" id="L509" title="2 of 4 branches missed.">                    &amp;&amp; !(colWord.equals(&quot;CS&quot;) || colWord.equals(&quot;GY&quot;)</span>
+<span class="pc bpc" id="L510" title="2 of 4 branches missed.">                            || colWord.equals(&quot;LY&quot;) || colWord.equals(&quot;NY&quot;)</span>
+<span class="pc bpc" id="L511" title="2 of 4 branches missed.">                            || colWord.equals(&quot;SZ&quot;) || colWord.equals(&quot;TY&quot;) || colWord</span>
+<span class="pc bpc" id="L512" title="1 of 2 branches missed.">                                .equals(&quot;ZS&quot;))) {</span>
+<span class="fc" id="L513">                playedWords.add(colWord);</span>
+            }
+        }
+
+<span class="fc" id="L517">        return playedWords;</span>
+    }
+
+    /**
+     * Calculates the value in points of a word placed horizontally and
+     * including the given position. This method is used by the public
+     * &lt;code&gt;calcPoints()&lt;/code&gt; method.
+     * 
+     * @param row
+     *            the row index of the starting position of the word
+     * @param col
+     *            the column index of the starting position of the word
+     * @return the value of the word in points
+     */
+    private int calcRowWordPts(int row, int col) {
+<span class="fc" id="L532">        int startCol = 0;</span>
+<span class="fc" id="L533">        int pts = 0;</span>
+<span class="fc" id="L534">        int factor = 1;</span>
+
+<span class="pc bpc" id="L536" title="1 of 2 branches missed.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="nc" id="L537">            return 0;</span>
+        }
+
+        // Find factors.
+<span class="pc bpc" id="L541" title="1 of 2 branches missed.">        for (int j = col; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L543">                break;</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">            } else if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">                if (board[row][j].getMultiplier() == Field.Multiplier.DWORD) {</span>
+<span class="fc" id="L546">                    factor *= 2;</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">                } else if (board[row][j].getMultiplier() == Field.Multiplier.TWORD) {</span>
+<span class="fc" id="L548">                    factor *= 3;</span>
+                }
+            }
+        }
+
+        // Find the first tile of the word.
+<span class="fc bfc" id="L554" title="All 2 branches covered.">        for (int j = col; j &gt;= 0; j--) {</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L556">                startCol = j + 1;</span>
+<span class="fc" id="L557">                break;</span>
+            }
+        }
+
+        // Calculate points.
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">        for (int j = startCol; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L564">                break;</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">            } else if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc bfc" id="L566" title="All 3 branches covered.">                switch (board[row][j].getMultiplier()) {</span>
+                case DLETTER:
+<span class="fc" id="L568">                    pts += 2 * factor</span>
+<span class="fc" id="L569">                            * Letters.getValue(board[row][j].getTileCode());</span>
+<span class="fc" id="L570">                    break;</span>
+                case TLETTER:
+<span class="fc" id="L572">                    pts += 3 * factor</span>
+<span class="fc" id="L573">                            * Letters.getValue(board[row][j].getTileCode());</span>
+<span class="fc" id="L574">                    break;</span>
+                default:
+<span class="fc" id="L576">                    pts += factor</span>
+<span class="fc" id="L577">                            * Letters.getValue(board[row][j].getTileCode());</span>
+                    break;
+                }
+<span class="fc" id="L580">            } else {</span>
+<span class="fc" id="L581">                pts += factor * Letters.getValue(board[row][j].getTileCode());</span>
+            }
+        }
+
+<span class="fc" id="L585">        return pts;</span>
+    }
+
+    /**
+     * Calculates the value in points of a word placed vertically and including
+     * the given position. This method is used by the public
+     * &lt;code&gt;calcPoints()&lt;/code&gt; method.
+     * 
+     * @param row
+     *            the row index of the starting position of the word
+     * @param col
+     *            the column index of the starting position of the word
+     * @return the value of the word in points
+     */
+    private int calcColWordPts(int row, int col) {
+<span class="fc" id="L600">        int startRow = 0;</span>
+<span class="fc" id="L601">        int pts = 0;</span>
+<span class="fc" id="L602">        int factor = 1;</span>
+
+<span class="pc bpc" id="L604" title="1 of 2 branches missed.">        if (board[row][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="nc" id="L605">            return 0;</span>
+        }
+
+        // Find factors.
+<span class="pc bpc" id="L609" title="1 of 2 branches missed.">        for (int i = row; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L611">                break;</span>
+<span class="pc bpc" id="L612" title="1 of 2 branches missed.">            } else if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="pc bpc" id="L613" title="1 of 2 branches missed.">                if (board[i][col].getMultiplier() == Field.Multiplier.DWORD) {</span>
+<span class="nc" id="L614">                    factor *= 2;</span>
+<span class="pc bfc" id="L615" title="All 2 branches covered.">                } else if (board[i][col].getMultiplier() == Field.Multiplier.TWORD) {</span>
+<span class="fc" id="L616">                    factor *= 3;</span>
+                }
+            }
+        }
+
+        // Find the first tile of the word.
+<span class="fc bfc" id="L622" title="All 2 branches covered.">        for (int i = row; i &gt;= 0; i--) {</span>
+<span class="pc bpc" id="L623" title="1 of 2 branches missed.">            if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="nc" id="L624">                startRow = i + 1;</span>
+<span class="nc" id="L625">                break;</span>
+            }
+        }
+
+        // Calculate points.
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">        for (int i = startRow; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L632">                break;</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">            } else if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="pc bpc" id="L634" title="1 of 3 branches missed.">                switch (board[i][col].getMultiplier()) {</span>
+                case DLETTER:
+<span class="fc" id="L636">                    pts += 2 * factor</span>
+<span class="fc" id="L637">                            * Letters.getValue(board[i][col].getTileCode());</span>
+<span class="fc" id="L638">                    break;</span>
+                case TLETTER:
+<span class="nc" id="L640">                    pts += 3 * factor</span>
+<span class="nc" id="L641">                            * Letters.getValue(board[i][col].getTileCode());</span>
+<span class="nc" id="L642">                    break;</span>
+                default:
+<span class="fc" id="L644">                    pts += factor</span>
+<span class="fc" id="L645">                            * Letters.getValue(board[i][col].getTileCode());</span>
+                    break;
+                }
+<span class="fc" id="L648">            } else {</span>
+<span class="fc" id="L649">                pts += factor * Letters.getValue(board[i][col].getTileCode());</span>
+            }
+        }
+
+<span class="fc" id="L653">        return pts;</span>
+    }
+
+    /**
+     * Returns the number of points the player will get in the current turn,
+     * based on the current state of the board. The method assumes that the
+     * state of the board allows the player to end his turn regarding the rules,
+     * i.e. the &lt;code&gt;isLegal()&lt;/code&gt; method returns &lt;code&gt;true&lt;/code&gt;,
+     * otherwise the return value will be undefined.
+     * 
+     * @return the total number of points gained in the current turn, or
+     *         undefined value if the &lt;code&gt;isLegal()&lt;/code&gt; method returns
+     *         &lt;code&gt;false&lt;/code&gt;
+     */
+    public int calcPoints() {
+<span class="fc" id="L668">        int pts = 0;</span>
+<span class="fc" id="L669">        int col = -1, row = -1; // if these remain -1, something's wrong with</span>
+        // the isLegal method
+
+<span class="fc" id="L672">        boolean found = false;</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L674" title="All 2 branches covered.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">                if (board[i][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L676">                    row = i;</span>
+<span class="fc" id="L677">                    col = j;</span>
+<span class="fc" id="L678">                    found = true;</span>
+<span class="fc" id="L679">                    break;</span>
+                }
+            }
+<span class="fc bfc" id="L682" title="All 2 branches covered.">            if (found) {</span>
+<span class="fc" id="L683">                break;</span>
+            }
+        }
+
+<span class="fc bfc" id="L687" title="All 2 branches covered.">        if (!found) {</span>
+<span class="fc" id="L688">            return 0;</span>
+        }
+
+<span class="fc" id="L691">        boolean tilesInRow = false;</span>
+<span class="fc bfc" id="L692" title="All 2 branches covered.">        for (int j = col + 1; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L693" title="All 2 branches covered.">            if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L694">                tilesInRow = true;</span>
+<span class="fc" id="L695">                break;</span>
+            }
+        }
+<span class="fc" id="L698">        boolean tilesInCol = false;</span>
+<span class="fc bfc" id="L699" title="All 2 branches covered.">        for (int i = row + 1; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">            if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L701">                tilesInCol = true;</span>
+<span class="fc" id="L702">                break;</span>
+            }
+        }
+
+<span class="fc bfc" id="L706" title="All 2 branches covered.">        if (tilesInRow) {</span>
+<span class="fc" id="L707">            pts += calcRowWordPts(row, col);</span>
+<span class="pc bpc" id="L708" title="1 of 2 branches missed.">            for (int j = col; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">                if (board[row][j].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L710">                    break;</span>
+<span class="pc bpc" id="L711" title="1 of 2 branches missed.">                } else if (board[row][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc bfc" id="L712" title="All 4 branches covered.">                    if ((row != 0 &amp;&amp; board[row - 1][j].getStatus() != Field.Status.EMPTY)</span>
+<span class="pc bpc" id="L713" title="1 of 2 branches missed.">                            || (row &lt; BOARD_SIZE - 1 &amp;&amp; board[row + 1][j]</span>
+<span class="pc bpc" id="L714" title="1 of 2 branches missed.">                                    .getStatus() != Field.Status.EMPTY)) {</span>
+<span class="fc" id="L715">                        pts += calcColWordPts(row, j);</span>
+                    }
+                }
+            }
+<span class="pc bfc" id="L719" title="All 2 branches covered.">        } else if (tilesInCol) {</span>
+<span class="fc" id="L720">            pts += calcColWordPts(row, col);</span>
+<span class="pc bpc" id="L721" title="1 of 2 branches missed.">            for (int i = row; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L722" title="All 2 branches covered.">                if (board[i][col].getStatus() == Field.Status.EMPTY) {</span>
+<span class="fc" id="L723">                    break;</span>
+<span class="pc bpc" id="L724" title="1 of 2 branches missed.">                } else if (board[i][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="pc bpc" id="L725" title="1 of 4 branches missed.">                    if ((col != 0 &amp;&amp; board[i][col - 1].getStatus() != Field.Status.EMPTY)</span>
+<span class="pc bpc" id="L726" title="1 of 2 branches missed.">                            || (col &lt; BOARD_SIZE - 1 &amp;&amp; board[i][col + 1]</span>
+<span class="pc bpc" id="L727" title="1 of 2 branches missed.">                                    .getStatus() != Field.Status.EMPTY)) {</span>
+<span class="fc" id="L728">                        pts += calcRowWordPts(i, col);</span>
+                    }
+                }
+            }
+<span class="nc" id="L732">        } else {</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">            if (board[row][col].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="pc bpc" id="L734" title="1 of 4 branches missed.">                if ((row != 0 &amp;&amp; board[row - 1][col].getStatus() != Field.Status.EMPTY)</span>
+<span class="pc bpc" id="L735" title="1 of 2 branches missed.">                        || (row &lt; BOARD_SIZE - 1 &amp;&amp; board[row + 1][col]</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">                                .getStatus() != Field.Status.EMPTY)) {</span>
+<span class="nc" id="L737">                    pts += calcColWordPts(row, col);</span>
+                }
+<span class="pc bpc" id="L739" title="1 of 4 branches missed.">                if ((col != 0 &amp;&amp; board[row][col - 1].getStatus() != Field.Status.EMPTY)</span>
+<span class="pc bpc" id="L740" title="1 of 2 branches missed.">                        || (col &lt; BOARD_SIZE - 1 &amp;&amp; board[row][col + 1]</span>
+<span class="pc bpc" id="L741" title="1 of 2 branches missed.">                                .getStatus() != Field.Status.EMPTY)) {</span>
+<span class="fc" id="L742">                    pts += calcRowWordPts(row, col);</span>
+                }
+            }
+        }
+
+<span class="fc" id="L747">        return pts;</span>
+    }
+
+    /**
+     * Returns the two dimensional array representing the fields of the board
+     * 
+     * @return a two dimensional array of &lt;code&gt;Field&lt;/code&gt; objects
+     */
+    public Field[][] getFields() {
+<span class="fc" id="L756">        return board;</span>
+    }    
+
+    public String getRowLetters(int row) {
+<span class="fc" id="L760">        StringBuffer sb = new StringBuffer();</span>
+<span class="fc bfc" id="L761" title="All 2 branches covered.">        for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc" id="L762">            String letter = Letters.getL(board[row][j].getTileCode());</span>
+<span class="fc bfc" id="L763" title="All 2 branches covered.">            if (letter != null) {</span>
+<span class="fc" id="L764">                sb.append(letter);</span>
+            }
+        }
+<span class="fc" id="L767">        return sb.toString();</span>
+    }
+
+    /**
+     * @return the movableTiles
+     */
+    public int getMovableTiles() {
+<span class="fc" id="L774">        return movableTiles;</span>
+    }
+
+    /**
+     * Checks if the tiles placed on the board in the current turn form
+     * grammatically correct words. If there are no such tiles, the method will
+     * return &lt;code&gt;false&lt;/code&gt;. The method receives a {@link Dictionary}
+     * object with the words considered correct.
+     * 
+     * @param dict
+     *            the &lt;code&gt;Dictionary&lt;/code&gt; object
+     * @return &lt;code&gt;true&lt;/code&gt; if all the words placed on the board in the
+     *         current turn are correct, &lt;code&gt;false&lt;/code&gt; if there are no
+     *         tiles placed on the board in the current turn, or there is at
+     *         least one grammatically incorrect word.
+     */
+    public boolean wordsAreCorrect(Dictionary dict) {
+        // System.out.println(&quot;Movable tiles: &quot; + movableTiles);
+<span class="fc" id="L792">        List&lt;String&gt; playedWords = getPlayedWords();</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">        if (playedWords == null) {</span>
+<span class="fc" id="L794">            return false;</span>
+        }
+<span class="fc" id="L796">        boolean areCorrect = true;</span>
+
+<span class="fc bfc" id="L798" title="All 2 branches covered.">        for (String word : playedWords) {</span>
+<span class="fc bfc" id="L799" title="All 2 branches covered.">            if (!dict.isCorrect(word)) {</span>
+<span class="fc" id="L800">                areCorrect = false;</span>
+<span class="fc" id="L801">                break;</span>
+            }
+        }
+
+<span class="fc" id="L805">        return areCorrect;</span>
+    }
+
+    public void finalizeFields() {
+<span class="fc bfc" id="L809" title="All 2 branches covered.">        for (int i = 0; i &lt; BOARD_SIZE; i++) {</span>
+<span class="fc bfc" id="L810" title="All 2 branches covered.">            for (int j = 0; j &lt; BOARD_SIZE; j++) {</span>
+<span class="fc bfc" id="L811" title="All 2 branches covered.">                if (board[i][j].getStatus() == Field.Status.MOVABLE) {</span>
+<span class="fc" id="L812">                    board[i][j].setStatus(Field.Status.FIXED);</span>
+                }
+            }
+        }
+<span class="fc" id="L816">        movableTiles = 0;</span>
+<span class="fc" id="L817">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

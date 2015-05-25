@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DictWord.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble</a> &gt; <span class="el_source">DictWord.java</span></div><h1>DictWord.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Note: this class has a natural ordering that is inconsistent with equals.
+ */
+public class DictWord implements Comparable&lt;DictWord&gt; {
+
+    private final String word;
+    private final byte[] auxData;
+
+    public static DictWord newWord(String word) {
+
+<span class="fc" id="L16">        boolean legal = true;</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        for (int i = 0; i &lt; word.length(); i++) {</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">            if (Letters.getC(String.valueOf(word.charAt(i))) == -1) {</span>
+<span class="fc bfc" id="L19" title="All 6 branches covered.">                if (!(word.charAt(i) == 'y' &amp;&amp; i &gt; 0 &amp;&amp; (word.charAt(i - 1) == 'g'</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">                        || word.charAt(i - 1) == 'l'</span>
+<span class="fc bfc" id="L21" title="All 4 branches covered.">                        || word.charAt(i - 1) == 'n' || word.charAt(i - 1) == 't'))) {</span>
+<span class="fc" id="L22">                    legal = false;</span>
+                }
+            }
+        }
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (legal) {</span>
+<span class="fc" id="L28">            return new DictWord(word);</span>
+        } else {
+<span class="fc" id="L30">            return null;</span>
+        }
+    }
+
+<span class="fc" id="L34">    private DictWord(String word) {</span>
+
+<span class="fc" id="L36">        this.word = word;</span>
+<span class="fc" id="L37">        auxData = new byte[Letters.getNum()];</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (int i = 0; i &lt; word.length(); i++) {</span>
+<span class="fc bfc" id="L40" title="All 4 branches covered.">            switch (word.charAt(i)) {</span>
+            case 'c':
+            case 'z':
+<span class="fc bfc" id="L43" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 's') {</span>
+<span class="fc" id="L44">                    auxData[Letters.getC(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L45">                            + String.valueOf(word.charAt(i + 1)))] += 1;</span>
+<span class="fc" id="L46">                    i++;</span>
+<span class="fc" id="L47">                } else {</span>
+<span class="fc" id="L48">                    auxData[Letters.getC(String.valueOf(word.charAt(i)))] += 1;</span>
+                }
+<span class="fc" id="L50">                break;</span>
+            case 'g':
+            case 'l':
+            case 'n':
+            case 't':
+<span class="fc bfc" id="L55" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 'y') {</span>
+<span class="fc" id="L56">                    auxData[Letters.getC(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L57">                            + String.valueOf(word.charAt(i + 1)))] += 1;</span>
+<span class="fc" id="L58">                    i++;</span>
+<span class="fc" id="L59">                } else {</span>
+<span class="fc" id="L60">                    auxData[Letters.getC(String.valueOf(word.charAt(i)))] += 1;</span>
+                }
+<span class="fc" id="L62">                break;</span>
+            case 's':
+<span class="fc bfc" id="L64" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 'z') {</span>
+<span class="fc" id="L65">                    auxData[Letters.getC(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L66">                            + String.valueOf(word.charAt(i + 1)))] += 1;</span>
+<span class="fc" id="L67">                    i++;</span>
+<span class="fc" id="L68">                } else {</span>
+<span class="fc" id="L69">                    auxData[Letters.getC(String.valueOf(word.charAt(i)))] += 1;</span>
+                }
+<span class="fc" id="L71">                break;</span>
+            default:
+<span class="fc" id="L73">                int index = Letters.getC(String.valueOf(word.charAt(i)));</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">                if (index != -1) {</span>
+<span class="fc" id="L75">                    auxData[index] += 1;</span>
+                }
+                break;
+            }
+        }
+<span class="fc" id="L80">    }</span>
+
+    public List&lt;String&gt; toStringList() {
+<span class="fc" id="L83">        List&lt;String&gt; list = new ArrayList&lt;String&gt;();</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int i = 0; i &lt; word.length(); i++) {</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">            switch (word.charAt(i)) {</span>
+            case 'c':
+            case 'z':
+<span class="fc bfc" id="L89" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 's') {</span>
+<span class="fc" id="L90">                    list.add(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L91">                            + String.valueOf(word.charAt(i + 1)));</span>
+<span class="fc" id="L92">                    i++;</span>
+<span class="fc" id="L93">                } else {</span>
+<span class="fc" id="L94">                    list.add(String.valueOf(word.charAt(i)));</span>
+                }
+<span class="fc" id="L96">                break;</span>
+            case 'g':
+            case 'l':
+            case 'n':
+            case 't':
+<span class="fc bfc" id="L101" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 'y') {</span>
+<span class="fc" id="L102">                    list.add(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L103">                            + String.valueOf(word.charAt(i + 1)));</span>
+<span class="fc" id="L104">                    i++;</span>
+<span class="fc" id="L105">                } else {</span>
+<span class="fc" id="L106">                    list.add(String.valueOf(word.charAt(i)));</span>
+                }
+<span class="fc" id="L108">                break;</span>
+            case 's':
+<span class="fc bfc" id="L110" title="All 4 branches covered.">                if (i &lt; word.length() - 1 &amp;&amp; word.charAt(i + 1) == 'z') {</span>
+<span class="fc" id="L111">                    list.add(String.valueOf(word.charAt(i))</span>
+<span class="fc" id="L112">                            + String.valueOf(word.charAt(i + 1)));</span>
+<span class="fc" id="L113">                    i++;</span>
+<span class="fc" id="L114">                } else {</span>
+<span class="fc" id="L115">                    list.add(String.valueOf(word.charAt(i)));</span>
+                }
+<span class="fc" id="L117">                break;</span>
+            default:
+<span class="fc" id="L119">                list.add(String.valueOf(word.charAt(i)));</span>
+                break;
+            }
+        }
+
+<span class="fc" id="L124">        return list;</span>
+    }
+
+    public boolean equals(DictWord other) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (this.word.equals(other.word)) {</span>
+<span class="nc" id="L129">            return true;</span>
+        } else {
+<span class="nc" id="L131">            return false;</span>
+        }
+    }
+
+    public boolean equals(String word) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (this.word.equals(word)) {</span>
+<span class="fc" id="L137">            return true;</span>
+        } else {
+<span class="fc" id="L139">            return false;</span>
+        }
+    }
+
+    public boolean playable(DictWord letters) {
+<span class="fc" id="L144">        boolean retVal = true;</span>
+<span class="fc" id="L145">        int jokers = letters.getJokers();</span>
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        for (int i = 0; i &lt; letters.auxData.length; i++) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            if (this.auxData[i] &gt; letters.auxData[i]) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                if (this.auxData[i] - letters.auxData[i] &lt;= jokers) {</span>
+<span class="fc" id="L150">                    jokers -= this.auxData[i] - letters.auxData[i];</span>
+<span class="fc" id="L151">                } else {</span>
+<span class="fc" id="L152">                    retVal = false;</span>
+<span class="fc" id="L153">                    break;</span>
+                }
+            }
+        }
+<span class="fc" id="L157">        return retVal;</span>
+    }
+
+    public int getJokers() {
+<span class="fc" id="L161">        return auxData[38];</span>
+    }
+
+    public byte[] getAuxData() {
+<span class="nc" id="L165">        return auxData;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L170">        return word;</span>
+    }
+
+    @Override
+    public int compareTo(DictWord o) {
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (this.word.length() &lt;= o.word.length()) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">            if (this.word.length() &lt; o.word.length())</span>
+<span class="fc" id="L177">                return -1;</span>
+            else
+<span class="fc" id="L179">                return 0;</span>
+        } else {
+<span class="fc" id="L181">            return 1;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

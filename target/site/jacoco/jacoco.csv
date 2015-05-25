@@ -1,0 +1,36 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.model,SavedGame,112,0,4,0,45,0,23,0,21,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.model,User,9,0,0,0,4,0,1,0,1,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.utils,Utils,137,0,10,0,28,0,11,0,6,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,ExistingUserException,12,0,0,0,6,0,3,0,3,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Computer.WordToPlay,21,0,0,0,8,0,1,0,1,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,SavedGameDAO,637,3,52,0,124,1,30,1,4,1
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Gameboard,163,2198,105,279,31,383,95,115,1,16
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,ConnectionFactory,62,0,0,0,20,0,4,0,4,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Computer,644,15,115,0,145,5,64,2,6,2
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Controller,1323,134,85,11,319,32,66,9,22,5
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,NoSavedGameException,12,0,0,0,6,0,3,0,3,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Letters,19,745,0,2,7,36,3,7,3,6
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,GameState,98,34,0,0,42,11,28,1,28,1
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Bag,31,101,2,6,6,23,2,8,1,5
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,DictWord,16,520,3,67,5,85,5,42,3,7
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Computer.new Comparator() {...},12,0,0,0,3,0,2,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Field.Status,21,39,0,0,1,7,2,2,2,2
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,UserDAO,163,3,28,0,32,1,16,1,2,1
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Field.Multiplier,5,75,0,0,0,12,1,3,1,3
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Main,52,4,0,0,14,1,2,1,2,1
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Field,15,43,0,0,6,18,1,9,1,9
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Tray,138,84,18,6,32,21,16,7,6,5
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Dictionary,16,98,2,12,3,23,2,9,1,3
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble,Player,14,17,0,0,6,6,4,2,4,2
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController,1641,0,88,0,344,0,64,0,20,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new ChangeListener() {...},17,0,2,0,6,0,3,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new Task() {...},27,0,0,0,5,0,2,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new EventHandler() {...},91,0,16,0,14,0,10,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,ScrabbleApp,175,0,0,0,55,0,9,0,9,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new EventHandler() {...},15,0,0,0,4,0,2,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new EventHandler() {...},15,0,0,0,4,0,2,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,LoginWindowController,126,0,8,0,38,0,12,0,8,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,MenuBarController,32,0,0,0,18,0,10,0,10,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new ChangeListener() {...},17,0,2,0,6,0,3,0,2,0
+kgsoft-scrabble,hu.unideb.kgsoft.scrabble.view,GameWindowController.new Task() {...},15,0,0,0,5,0,2,0,2,0

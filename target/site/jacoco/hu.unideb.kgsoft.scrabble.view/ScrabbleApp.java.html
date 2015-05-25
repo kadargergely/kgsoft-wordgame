@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ScrabbleApp.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble.view</a> &gt; <span class="el_source">ScrabbleApp.java</span></div><h1>ScrabbleApp.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble.view;
+
+import hu.unideb.kgsoft.scrabble.Controller;
+
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+
+<span class="nc" id="L15">public class ScrabbleApp extends Application {</span>
+    private Stage primaryStage;
+    private BorderPane rootLayout;
+    //TODO private AnchorPane loginRoot;
+    
+    private static Controller mainCtr;    
+
+    /**
+     * Sets the reference to the &lt;code&gt;Controller&lt;/code&gt; object.
+     * @param mainCtr the mainCtr to set
+     */
+    public static void setMainCtr(Controller mainCtr) {
+<span class="nc" id="L27">        ScrabbleApp.mainCtr = mainCtr;</span>
+<span class="nc" id="L28">    }</span>
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+<span class="nc" id="L32">        this.primaryStage = primaryStage;</span>
+<span class="nc" id="L33">        this.primaryStage.setTitle(&quot;Bejelentkezés&quot;);</span>
+        
+<span class="nc" id="L35">        showLoginWindow();      </span>
+<span class="nc" id="L36">    }</span>
+    
+    public void initRootLayout() {
+        try {
+<span class="nc" id="L40">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L41">            loader.setLocation(ScrabbleApp.class.getResource(&quot;/fxmls/RootLayout.fxml&quot;));</span>
+<span class="nc" id="L42">            loader.setController(new MenuBarController());</span>
+<span class="nc" id="L43">            rootLayout = (BorderPane) loader.load();</span>
+            
+<span class="nc" id="L45">            Scene scene = new Scene(rootLayout);</span>
+<span class="nc" id="L46">            primaryStage.setScene(scene);</span>
+<span class="nc" id="L47">            primaryStage.show();            </span>
+<span class="nc" id="L48">            primaryStage.setResizable(false);</span>
+            
+<span class="nc" id="L50">            MenuBarController menuBarController = loader.getController();</span>
+<span class="nc" id="L51">            menuBarController.setMainCtr(mainCtr);</span>
+<span class="nc" id="L52">            menuBarController.setMainApp(this);</span>
+<span class="nc" id="L53">            mainCtr.setMenuBarController(menuBarController);</span>
+<span class="nc" id="L54">        } catch (IOException e) {</span>
+<span class="nc" id="L55">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L57">    }</span>
+    
+    public void showScrabbleGameWindow() {
+        try {
+<span class="nc" id="L61">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L62">            loader.setLocation(ScrabbleApp.class.getResource(&quot;/fxmls/ScrabbleGameWindow.fxml&quot;));</span>
+<span class="nc" id="L63">            loader.setController(new GameWindowController());</span>
+<span class="nc" id="L64">            AnchorPane scrabbleGameWindow = (AnchorPane) loader.load();</span>
+            
+<span class="nc" id="L66">            rootLayout.setCenter(scrabbleGameWindow);</span>
+            
+<span class="nc" id="L68">            GameWindowController windowCtr = loader.getController();</span>
+<span class="nc" id="L69">            windowCtr.setMainCtr(mainCtr);</span>
+<span class="nc" id="L70">            mainCtr.setWindowCtr(windowCtr);</span>
+            
+<span class="nc" id="L72">        } catch (IOException e) {</span>
+<span class="nc" id="L73">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L75">    }</span>
+    
+    public void showLoginWindow() {
+        try {
+<span class="nc" id="L79">            FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L80">            loader.setLocation(this.getClass().getResource(&quot;/fxmls/LoginWindow.fxml&quot;));</span>
+<span class="nc" id="L81">            loader.setController(new LoginWindowController());</span>
+<span class="nc" id="L82">            AnchorPane loginWindow = (AnchorPane) loader.load();</span>
+            
+<span class="nc" id="L84">            Scene scene = new Scene(loginWindow);</span>
+<span class="nc" id="L85">            primaryStage.setScene(scene);</span>
+<span class="nc" id="L86">            primaryStage.show();</span>
+            
+<span class="nc" id="L88">            primaryStage.setResizable(false);</span>
+            
+<span class="nc" id="L90">            LoginWindowController loginCtr = loader.getController();</span>
+<span class="nc" id="L91">            loginCtr.setMainApp(this);</span>
+<span class="nc" id="L92">            loginCtr.setMainCtr(mainCtr);</span>
+<span class="nc" id="L93">            mainCtr.setLoginController(loginCtr);            </span>
+<span class="nc" id="L94">        } catch (IOException e) {</span>
+<span class="nc" id="L95">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L97">    }</span>
+    
+    public void switchToGameWindow() {
+<span class="nc" id="L100">        primaryStage.setTitle(&quot;Scrabble&quot;);</span>
+        
+<span class="nc" id="L102">        initRootLayout();</span>
+<span class="nc" id="L103">        showScrabbleGameWindow();</span>
+<span class="nc" id="L104">    }</span>
+    
+    public Stage getPrimaryStage() {
+<span class="nc" id="L107">        return primaryStage;</span>
+    }
+    
+    public static void runApp(String[] args) {        
+<span class="nc" id="L111">        launch(args);</span>
+<span class="nc" id="L112">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

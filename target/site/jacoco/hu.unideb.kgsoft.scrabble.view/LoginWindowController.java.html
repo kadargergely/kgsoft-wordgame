@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LoginWindowController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble.view</a> &gt; <span class="el_source">LoginWindowController.java</span></div><h1>LoginWindowController.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble.view;
+
+import hu.unideb.kgsoft.scrabble.Controller;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+
+public class LoginWindowController {
+
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Label passwordAgainLabel;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField passwordAgainField;
+    @FXML
+    private CheckBox newUserCheckBox;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button exitButton;
+
+    private Controller mainCtr;
+    private ScrabbleApp mainApp;
+
+    /**
+     * The constructor. The constructor is called before the initialize()
+     * method.
+     */
+<span class="nc" id="L41">    public LoginWindowController() {</span>
+<span class="nc" id="L42">    }</span>
+
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded.
+     */
+    @FXML
+    private void initialize() {
+<span class="nc" id="L50">        passwordAgainLabel.setVisible(false);</span>
+<span class="nc" id="L51">        passwordAgainField.setVisible(false);</span>
+<span class="nc" id="L52">    }</span>
+
+    @FXML
+    private void loginButtonClicked() {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (!newUserCheckBox.isSelected()) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (mainCtr.login(usernameField.getText(), passwordField.getText())) {</span>
+<span class="nc" id="L58">                mainApp.switchToGameWindow();</span>
+<span class="nc" id="L59">                mainCtr.setupInitialView();</span>
+            }
+<span class="nc" id="L61">        } else {</span>
+<span class="nc" id="L62">            if (mainCtr.newUser(usernameField.getText(),</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                    passwordField.getText(), passwordAgainField.getText())) {</span>
+<span class="nc" id="L64">                Alert alert = new Alert(AlertType.INFORMATION);</span>
+<span class="nc" id="L65">                alert.setTitle(&quot;Siker&quot;);</span>
+<span class="nc" id="L66">                alert.setHeaderText(null);</span>
+<span class="nc" id="L67">                alert.setContentText(&quot;Sikeresen létrehoztál egy új felhasználót &quot;</span>
+<span class="nc" id="L68">                        + usernameField.getText() + &quot; néven.&quot;);</span>
+
+<span class="nc" id="L70">                alert.showAndWait();</span>
+<span class="nc" id="L71">                mainApp.switchToGameWindow();</span>
+            }
+        }
+<span class="nc" id="L74">    }</span>
+
+    @FXML
+    private void exitButtonClicked() {
+
+<span class="nc" id="L79">    }</span>
+
+    @FXML
+    private void checkBoxClicked() {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (newUserCheckBox.isSelected()) {</span>
+<span class="nc" id="L84">            passwordAgainLabel.setVisible(true);</span>
+<span class="nc" id="L85">            passwordAgainField.setVisible(true);</span>
+<span class="nc" id="L86">        } else {</span>
+<span class="nc" id="L87">            passwordAgainLabel.setVisible(false);</span>
+<span class="nc" id="L88">            passwordAgainField.setVisible(false);</span>
+        }
+<span class="nc" id="L90">    }</span>
+
+    public void showErrorMessage(String header, String mesg) {
+<span class="nc" id="L93">        Alert alert = new Alert(AlertType.ERROR);</span>
+<span class="nc" id="L94">        alert.setTitle(&quot;Hiba&quot;);</span>
+<span class="nc" id="L95">        alert.setHeaderText(header);</span>
+<span class="nc" id="L96">        alert.setContentText(mesg);</span>
+
+<span class="nc" id="L98">        alert.showAndWait();</span>
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Sets the reference to the &lt;code&gt;Controller&lt;/code&gt; object.
+     * 
+     * @param mainCtr
+     *            the mainCtr to set
+     */
+    public void setMainCtr(Controller mainCtr) {
+<span class="nc" id="L108">        this.mainCtr = mainCtr;</span>
+<span class="nc" id="L109">    }</span>
+
+    public void setMainApp(ScrabbleApp mainApp) {
+<span class="nc" id="L112">        this.mainApp = mainApp;</span>
+<span class="nc" id="L113">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>

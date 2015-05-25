@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Tray.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">kgsoft-scrabble</a> &gt; <a href="index.source.html" class="el_package">hu.unideb.kgsoft.scrabble</a> &gt; <span class="el_source">Tray.java</span></div><h1>Tray.java</h1><pre class="source lang-java linenums">package hu.unideb.kgsoft.scrabble;
+
+/**
+ * The &lt;code&gt;Tray&lt;/code&gt; class represents the tray in the game, on which a
+ * player places his/her letter tiles drawn from the bag. A &lt;code&gt;Tray&lt;/code&gt;
+ * object stores the tile codes of the letters tiles on it and the number of
+ * letter tiles currently placed on it. Basic operations are adding a tile to
+ * the tray or picking one up from it with a specific index position or in
+ * general.
+ * 
+ * @author gergo
+ *
+ */
+public class Tray {
+
+    /**
+     * An &lt;code&gt;int&lt;/code&gt; array storing the code of the tiles on the tray.
+     */
+    private int[] letters;
+    /**
+     * The maximum number of tiles that can be placed on the tray.
+     */
+    public static final int TRAY_SIZE = 7;
+    /**
+     * The number of letters currently on the tray
+     */
+    private int numOfLetters;
+
+    /**
+     * Constructs a new tray with no letter tiles on it.
+     */
+<span class="fc" id="L32">    public Tray() {</span>
+<span class="fc" id="L33">        letters = new int[TRAY_SIZE];</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (int i = 0; i &lt; letters.length; i++) {</span>
+<span class="fc" id="L35">            letters[i] = -1;</span>
+        }
+<span class="fc" id="L37">        numOfLetters = 0;</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Returns all the letters from the tray concatenated as a
+     * &lt;code&gt;String&lt;/code&gt;.
+     * 
+     * @return the letters from the tray as a &lt;code&gt;String&lt;/code&gt;
+     */
+    public String getLettersAsString() {
+<span class="nc" id="L47">        StringBuffer sb = new StringBuffer();</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (int i = 0; i &lt; letters.length; i++) {</span>
+<span class="nc" id="L49">            String letter = Letters.getL(letters[i]);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (letter != null) {</span>
+<span class="nc" id="L51">                sb.append(letter);</span>
+            }
+        }
+
+<span class="nc" id="L55">        return sb.toString();</span>
+    }
+
+    /**
+     * Returns the tile code from the given index from the tray, and replaces
+     * the tile code value on the tray with -1. If there is no tile at the given
+     * index, or the index is greater than the &lt;code&gt;TRAY_SIZE&lt;/code&gt;, the
+     * returned value is -1.
+     * 
+     * @param index
+     *            the index on the tray from which the tile will be picked up
+     * @return the tile code from the given position from the tray or -1 if
+     *         there is no tile or the &lt;code&gt;index&lt;/code&gt; is too large
+     */
+    public int pickTile(int index) {
+        try {
+<span class="fc" id="L71">            int retVal = letters[index];</span>
+<span class="fc" id="L72">            letters[index] = -1;</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (retVal != -1) {</span>
+<span class="fc" id="L74">                numOfLetters--;</span>
+            }
+<span class="fc" id="L76">            return retVal;</span>
+<span class="nc" id="L77">        } catch (IndexOutOfBoundsException e) {</span>
+<span class="nc" id="L78">            return -1;</span>
+        }
+    }
+
+    /**
+     * Places a tile with the given tile code on the tray at the given index if
+     * possible. If there was no tile at the index, returns &lt;code&gt;true&lt;/code&gt;
+     * indicating success, otherwise returns &lt;code&gt;false&lt;/code&gt;.
+     * 
+     * @param tileCode
+     *            the code of the tile to be placed on the tray
+     * @param index
+     *            the index where the tile should be placed
+     * @return &lt;code&gt;true&lt;/code&gt; if the tile could be placed, &lt;code&gt;false&lt;/code&gt;
+     *         otherwise
+     */
+    public boolean setTile(int tileCode, int index) {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (letters[index] == -1) {</span>
+<span class="nc" id="L96">            letters[index] = tileCode;</span>
+<span class="nc" id="L97">            numOfLetters++;</span>
+<span class="nc" id="L98">            return true;</span>
+        } else {
+<span class="nc" id="L100">            return false;</span>
+        }
+    }
+
+    /**
+     * Adds the given tile code to the first available position on the tray.
+     * Returns &lt;code&gt;true&lt;/code&gt; if the tile has been successfully added,
+     * meaning there was still place left on the tray, &lt;code&gt;false&lt;/code&gt;
+     * otherwise.
+     * 
+     * @param code
+     *            the tile code that should be added to the tray
+     * @return &lt;code&gt;true&lt;/code&gt; if the tile has been successfully added,
+     *         &lt;code&gt;false&lt;/code&gt; otherwise
+     */
+    public boolean addTile(int code) {
+<span class="fc" id="L116">        boolean isPlace = false;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        for (int i = 0; i &lt; letters.length; i++) {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (letters[i] == -1) {</span>
+<span class="fc" id="L119">                letters[i] = code;</span>
+<span class="fc" id="L120">                numOfLetters++;</span>
+<span class="fc" id="L121">                isPlace = true;</span>
+<span class="fc" id="L122">                break;</span>
+            }
+        }
+<span class="fc" id="L125">        return isPlace;</span>
+    }
+
+    /**
+     * Removes the first occurrence of a tile with the given tile code from the
+     * tray. The tile code on the tray at this position will be replaced by -1.
+     * Returns &lt;code&gt;true&lt;/code&gt; if the removal was successful,
+     * &lt;code&gt;false&lt;/code&gt; if there was no tile on the tray with the given tile
+     * code.
+     * 
+     * @param code
+     *            the code of the tile to be removed
+     * @return &lt;code&gt;true&lt;/code&gt; if the removal is successful,
+     *         &lt;code&gt;false&lt;/code&gt; if couldn't find the tile code on the tray
+     */
+    public boolean removeTile(int code) {
+<span class="nc" id="L141">        boolean removed = false;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        for (int i = 0; i &lt; letters.length; i++) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (letters[i] == code) {</span>
+<span class="nc" id="L144">                letters[i] = -1;</span>
+<span class="nc" id="L145">                numOfLetters--;</span>
+<span class="nc" id="L146">                removed = true;</span>
+<span class="nc" id="L147">                break;</span>
+            }
+        }
+<span class="nc" id="L150">        return removed;</span>
+    }
+
+    /**
+     * Returns the number of letters on the tray. It is advisable to check if
+     * the number of letters is less than the size of the tray, before calling
+     * the &lt;code&gt;addTile&lt;/code&gt; method.
+     * 
+     * @return the number of letters on the tray
+     */
+    public int getNumOfLetters() {
+<span class="fc" id="L161">        return numOfLetters;</span>
+    }
+
+    /**
+     * Returns the tile code of the tile from the tray, from the given index.
+     * The return value is -1 if there is not tile at the given index.
+     * 
+     * @param index
+     *            the index on the tray
+     * @return a tile code or -1 if there is no tile at the given index
+     */
+    public int getTileCodeAt(int index) {
+<span class="nc" id="L173">        return letters[index];</span>
+    }
+
+    /**
+     * Resets the tray to its initial state, with no letters. All tile codes are
+     * set to -1. Should be used for testing only.
+     */
+    public void reset() {
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (int i = 0; i &lt; TRAY_SIZE; i++) {</span>
+<span class="nc" id="L182">            letters[i] = -1;</span>
+        }
+<span class="nc" id="L184">        numOfLetters = 0;</span>
+<span class="nc" id="L185">    }</span>
+
+    /**
+     * Sets the letter tile codes on the tray. Receives an array of integers
+     * with the tile codes. Should be used for testing only.
+     * 
+     * @param letters
+     *            the array containing the new letter tile codes
+     */
+    public void setLetters(int[] letters) {
+<span class="nc" id="L195">        this.letters = letters;</span>
+<span class="nc" id="L196">        numOfLetters = 0;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (int code : letters) {</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">            if (code != -1) {</span>
+<span class="nc" id="L199">                numOfLetters++;</span>
+            }
+        }
+<span class="nc" id="L202">    }</span>
+
+    // TODO only for debug purposes
+    public int[] getLetters() {
+<span class="fc" id="L206">        return letters;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.4.201502262128</span></div></body></html>
