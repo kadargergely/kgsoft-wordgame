@@ -41,12 +41,13 @@ public class Main {
      */
     public static void main(String[] args) {
         logger.info("Application started.");
+        logger.info("Using java version " + System.getProperty("java.version"));      
         String dictFile = "/hu_HU.dic";
-        try {            
+        try {        	
             logger.info("Initializing Controller class with dictionary file '" + dictFile + "'...");
             Controller ctr = new Controller(new InputStreamReader(Main.class.getResourceAsStream(dictFile), "UTF-8"));            
             logger.info("Controller class initialized.");            
-            ScrabbleApp.setMainCtr(ctr);
+            ScrabbleApp.setMainCtr(ctr);            
 
             logger.info("Starting GUI...");
             ScrabbleApp.runApp(args);

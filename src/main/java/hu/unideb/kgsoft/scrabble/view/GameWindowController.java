@@ -27,12 +27,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
+import org.omg.CORBA.VersionSpecHelper;
+
 import hu.unideb.kgsoft.scrabble.Computer;
 import hu.unideb.kgsoft.scrabble.Controller;
 import hu.unideb.kgsoft.scrabble.Dictionary;
 import hu.unideb.kgsoft.scrabble.GameState;
 import hu.unideb.kgsoft.scrabble.GameView;
 import hu.unideb.kgsoft.scrabble.Gameboard;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -53,7 +56,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-
 import static hu.unideb.kgsoft.scrabble.Main.logger;
 
 public class GameWindowController implements GameView {    
@@ -120,7 +122,8 @@ public class GameWindowController implements GameView {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize() {    	
+    	
         // Load letter sprites.
         letterSprites = new ArrayList<Image>();
         letterSprites.add(new Image(GameWindowController.class.getResource(
@@ -436,21 +439,21 @@ public class GameWindowController implements GameView {
 
         // redrawButton enable/disable
         if (redrawButton.disabledProperty().get()) {
-            if (!gameState.isMovableTiles() && gameState.getTilesInBag() > 0
+            if (!gameState.isMovableTiles() && !gameState.isTileInHand() && gameState.getTilesInBag() > 0
                     && gameState.isPlayersTurn() && gameState.isGameStarted()) {
                 redrawButton.setDisable(false);
             }
-        } else if (gameState.isMovableTiles() || gameState.getTilesInBag() == 0
+        } else if (gameState.isMovableTiles() || gameState.isTileInHand() || gameState.getTilesInBag() == 0
                 || !gameState.isPlayersTurn() || !gameState.isGameStarted()) {
             redrawButton.setDisable(true);
         }
 
         // passButton enable/disable
         if (passButton.disabledProperty().get()) {
-            if (!gameState.isMovableTiles() && gameState.isPlayersTurn() && gameState.isGameStarted()) {
+            if (!gameState.isMovableTiles() && !gameState.isTileInHand() && gameState.isPlayersTurn() && gameState.isGameStarted()) {
                 passButton.setDisable(false);
             }
-        } else if (gameState.isMovableTiles() || !gameState.isPlayersTurn() || !gameState.isGameStarted()) {
+        } else if (gameState.isMovableTiles() || gameState.isTileInHand() || !gameState.isPlayersTurn() || !gameState.isGameStarted()) {
             passButton.setDisable(true);
         }
 
