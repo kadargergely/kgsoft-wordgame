@@ -26,224 +26,313 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class for holding informations about the state of the game. The view class
- * has a reference to an object of this class to present these informations to
- * the user.
+ * Class for holding informations about the state of the game. An instance of
+ * this class is used by the controller to communicate the changes of the game's
+ * state to the view, which then displays these informations in a form, which is
+ * independent by the controller.
  */
 public class GameState {
-    private int computerScore;
-    private int playerScore;
-    private boolean playersTurn;
-    private List<String> currentWords;
-    private int currentWordsPoints;
-    private List<String> lastWords;
-    private int lastWordsPoints;
-    private boolean boardLegal;
-    private boolean tileInHand;
-    private boolean movableTiles;
-    private boolean wordsCorrect;
-    private String playerName;
-    private int tilesInBag;
-    private boolean gameStarted;
+	private int computerScore;
+	private int playerScore;
+	private boolean playersTurn;
+	private List<String> currentWords;
+	private int currentWordsPoints;
+	private List<String> lastWords;
+	private int lastWordsPoints;
+	private boolean boardLegal;
+	private boolean tileInHand;
+	private boolean movableTiles;
+	private boolean wordsCorrect;
+	private String playerName;
+	private int tilesInBag;
+	private boolean gameStarted;
 
-    public boolean isGameStarted() {
-        return gameStarted;
-    }
+	/**
+	 * Returns {@code true} if the game has started.
+	 * 
+	 * @return {@code true} if the game has started, {@code false} otherwise
+	 */
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
 
-    public void setGameStarted(boolean gameStarted) {
-        this.gameStarted = gameStarted;
-    }
+	/**
+	 * Sets the boolean value to the {@code gameStarted} field.
+	 * 
+	 * @param gameStarted
+	 *            the value to set
+	 */
+	public void setGameStarted(boolean gameStarted) {
+		this.gameStarted = gameStarted;
+	}
 
-    public int getTilesInBag() {
-        return tilesInBag;
-    }
+	/**
+	 * Returns the number of tiles that are currently in the bag.
+	 * 
+	 * @return the number of tiles that are currently in the bag
+	 */
+	public int getTilesInBag() {
+		return tilesInBag;
+	}
 
-    public void setTilesInBag(int tilesInBag) {
-        this.tilesInBag = tilesInBag;
-    }
+	/**
+	 * Sets how many tiles are currently in the bag.
+	 * 
+	 * @param tilesInBag
+	 *            the number of tiles to set
+	 */
+	public void setTilesInBag(int tilesInBag) {
+		this.tilesInBag = tilesInBag;
+	}
 
-    /**
-     * @return the playerName
-     */
-    public String getPlayerName() {
-        return playerName;
-    }
+	/**
+	 * Returns the name of the human player.
+	 * 
+	 * @return the playerName the name of the human player
+	 */
+	public String getPlayerName() {
+		return playerName;
+	}
 
-    /**
-     * @param playerName the playerName to set
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
+	/**
+	 * Sets the name of the player.
+	 * 
+	 * @param playerName
+	 *            the player name to set
+	 */
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
 
-    /**
-     * @return the wordsCorrect
-     */
-    public boolean isWordsCorrect() {
-        return wordsCorrect;
-    }
+	/**
+	 * Returns {@code true} if the words on the board are grammatically correct.
+	 * 
+	 * @return the wordsCorrect {@code true} if the words on the board are
+	 *         grammatically correct, {@code false} otherwise
+	 */
+	public boolean isWordsCorrect() {
+		return wordsCorrect;
+	}
 
-    /**
-     * @param wordsCorrect the wordsCorrect to set
-     */
-    public void setWordsCorrect(boolean wordsCorrect) {
-        this.wordsCorrect = wordsCorrect;
-    }
+	/**
+	 * Sets the boolean value for the {@code wordsCorrect} field.
+	 * 
+	 * @param wordsCorrect
+	 *            the value to set
+	 */
+	public void setWordsCorrect(boolean wordsCorrect) {
+		this.wordsCorrect = wordsCorrect;
+	}
 
-    /**
-     * @return the movableTiles
-     */
-    public boolean isMovableTiles() {
-        return movableTiles;
-    }
+	/**
+	 * Returns {@code true} when there are tiles on the fields, placed on the
+	 * board in the current turn.
+	 * 
+	 * @return the movableTiles {@code true} when there are movable tiles on the
+	 *         board, {@code false} otherwise
+	 * 
+	 */
+	public boolean isMovableTiles() {
+		return movableTiles;
+	}
 
-    /**
-     * @param movableTiles the movableTiles to set
-     */
-    public void setMovableTiles(boolean movableTiles) {
-        this.movableTiles = movableTiles;
-    }
+	/**
+	 * Sets the boolean value for the {@code movableTiles} field.
+	 * 
+	 * @param movableTiles
+	 *            the value to set
+	 */
+	public void setMovableTiles(boolean movableTiles) {
+		this.movableTiles = movableTiles;
+	}
 
-    /**
-     * @return the tileInHand
-     */
-    public boolean isTileInHand() {
-        return tileInHand;
-    }
+	/**
+	 * Returns {@code true} if there is a tile in the players hand.
+	 * 
+	 * @return the tileInHand {@code true} if there is a tile in the players
+	 *         hand, {@code false} otherwise
+	 */
+	public boolean isTileInHand() {
+		return tileInHand;
+	}
 
-    /**
-     * @param tileInHand the tileInHand to set
-     */
-    public void setTileInHand(boolean tileInHand) {
-        this.tileInHand = tileInHand;
-    }
+	/**
+	 * Sets the boolean value of the {@code tileInHand} field.
+	 * 
+	 * @param tileInHand
+	 *            the value to set
+	 */
+	public void setTileInHand(boolean tileInHand) {
+		this.tileInHand = tileInHand;
+	}
 
-    /**
-     * Constructor for creating a <code>GameState</code> object with default
-     * values.
-     */
-    public GameState() {
-        computerScore = 0;
-        playerScore = 0;
-        playersTurn = true;
-        currentWords = new ArrayList<String>();
-        currentWordsPoints = 0;
-        lastWords = new ArrayList<String>();
-        lastWordsPoints = 0;
-        tilesInBag = 100;
-        gameStarted = false;
-    }
+	/**
+	 * Constructor for creating a <code>GameState</code> object with default
+	 * values.
+	 */
+	public GameState() {
+		computerScore = 0;
+		playerScore = 0;
+		playersTurn = true;
+		currentWords = new ArrayList<String>();
+		currentWordsPoints = 0;
+		lastWords = new ArrayList<String>();
+		lastWordsPoints = 0;
+		tilesInBag = 100;
+		gameStarted = false;
+	}
 
-    /**
-     * @return the computerScore
-     */
-    public int getComputerScore() {
-        return computerScore;
-    }
+	/**
+	 * Returns the current score of the computer.
+	 * 
+	 * @return the current score of the computer
+	 */
+	public int getComputerScore() {
+		return computerScore;
+	}
 
-    /**
-     * @param computerScore the computerScore to set
-     */
-    public void setComputerScore(int computerScore) {
-        this.computerScore = computerScore;
-    }
+	/**
+	 * Sets the current score of the computer.
+	 * 
+	 * @param computerScore
+	 *            the score to set
+	 */
+	public void setComputerScore(int computerScore) {
+		this.computerScore = computerScore;
+	}
 
-    /**
-     * @return the playerScore
-     */
-    public int getPlayerScore() {
-        return playerScore;
-    }
+	/**
+	 * Returns the current score of the player.
+	 * 
+	 * @return the current score of the player
+	 */
+	public int getPlayerScore() {
+		return playerScore;
+	}
 
-    /**
-     * @param playerScore the playerScore to set
-     */
-    public void setPlayerScore(int playerScore) {
-        this.playerScore = playerScore;
-    }
+	/**
+	 * Sets the current score of the player.
+	 * 
+	 * @param playerScore
+	 *            the score to set
+	 */
+	public void setPlayerScore(int playerScore) {
+		this.playerScore = playerScore;
+	}
 
-    /**
-     * @return the playersTurn
-     */
-    public boolean isPlayersTurn() {
-        return playersTurn;
-    }
+	/**
+	 * Returns {@code true} when the current turn is the player's.
+	 * 
+	 * @return {@code true} when the current turn is the player's and
+	 *         {@code false} otherwise
+	 */
+	public boolean isPlayersTurn() {
+		return playersTurn;
+	}
 
-    /**
-     * @param playersTurn the playersTurn to set
-     */
-    public void setPlayersTurn(boolean playersTurn) {
-        this.playersTurn = playersTurn;
-    }
+	/**
+	 * Sets the boolean value for the {@code playersTurn} field.
+	 * 
+	 * @param playersTurn
+	 *            the value to set
+	 */
+	public void setPlayersTurn(boolean playersTurn) {
+		this.playersTurn = playersTurn;
+	}
 
-    /**
-     * @return the currentWords
-     */
-    public List<String> getCurrentWords() {
-        return currentWords;
-    }
+	/**
+	 * Returns the words formed in the current turn as a list of strings.
+	 * 
+	 * @return the currentWords the words formed in the current turn
+	 */
+	public List<String> getCurrentWords() {
+		return currentWords;
+	}
 
-    /**
-     * @param currentWords the currentWords to set
-     */
-    public void setCurrentWords(List<String> currentWords) {
-        this.currentWords = currentWords;
-    }
+	/**
+	 * Sets the words formed in the current turn.
+	 * 
+	 * @param currentWords
+	 *            the words to set
+	 */
+	public void setCurrentWords(List<String> currentWords) {
+		this.currentWords = currentWords;
+	}
 
-    /**
-     * @return the currentWordsPoints
-     */
-    public int getCurrentWordsPoints() {
-        return currentWordsPoints;
-    }
+	/**
+	 * Returns the number of points gained in the current turn.
+	 * 
+	 * @return the number of points gained in the current turn
+	 */
+	public int getCurrentWordsPoints() {
+		return currentWordsPoints;
+	}
 
-    /**
-     * @param currentWordsPoints the currentWordsPoints to set
-     */
-    public void setCurrentWordsPoints(int currentWordsPoints) {
-        this.currentWordsPoints = currentWordsPoints;
-    }
+	/**
+	 * Sets the number of points gained in in the current turn.
+	 * 
+	 * @param currentWordsPoints
+	 *            the points to set
+	 */
+	public void setCurrentWordsPoints(int currentWordsPoints) {
+		this.currentWordsPoints = currentWordsPoints;
+	}
 
-    /**
-     * @return the lastWords
-     */
-    public List<String> getLastWords() {
-        return lastWords;
-    }
+	/**
+	 * Returns the words formed in the preceding turn as a list of strings.
+	 * 
+	 * @return the words formed in the preceding turn
+	 */
+	public List<String> getLastWords() {
+		return lastWords;
+	}
 
-    /**
-     * @param lastWords the lastWords to set
-     */
-    public void setLastWords(List<String> lastWords) {
-        this.lastWords = lastWords;
-    }
+	/**
+	 * Sets the words formed in the preceding turn.
+	 * 
+	 * @param lastWords
+	 *            the words to set
+	 */
+	public void setLastWords(List<String> lastWords) {
+		this.lastWords = lastWords;
+	}
 
-    /**
-     * @return the lastWordsPoints
-     */
-    public int getLastWordsPoints() {
-        return lastWordsPoints;
-    }
+	/**
+	 * Returns the number of points gained by a player in the preceding turn.
+	 * 
+	 * @return the number of points gained by a player in the preceding turn
+	 */
+	public int getLastWordsPoints() {
+		return lastWordsPoints;
+	}
 
-    /**
-     * @param lastWordsPoints the lastWordsPoints to set
-     */
-    public void setLastWordsPoints(int lastWordsPoints) {
-        this.lastWordsPoints = lastWordsPoints;
-    }
+	/**
+	 * Sets the number of points gained by a player in the preceding turn.
+	 * 
+	 * @param lastWordsPoints
+	 *            the points to set
+	 */
+	public void setLastWordsPoints(int lastWordsPoints) {
+		this.lastWordsPoints = lastWordsPoints;
+	}
 
-    /**
-     * @return the boardLegal
-     */
-    public boolean isBoardLegal() {
-        return boardLegal;
-    }
+	/**
+	 * Returns {@code true} if the tiles on the board are placed correctly.
+	 * 
+	 * @return {@code true} if the tiles on the board are placed correctly,
+	 *         {@code false} otherwise
+	 */
+	public boolean isBoardLegal() {
+		return boardLegal;
+	}
 
-    /**
-     * @param boardLegal the boardLegal to set
-     */
-    public void setBoardLegal(boolean boardLegal) {
-        this.boardLegal = boardLegal;
-    }    
-    
+	/**
+	 * Sets the boolean value for the {@code boardLegal} field.
+	 * @param boardLegal
+	 *            the value to set
+	 */
+	public void setBoardLegal(boolean boardLegal) {
+		this.boardLegal = boardLegal;
+	}
+
 }

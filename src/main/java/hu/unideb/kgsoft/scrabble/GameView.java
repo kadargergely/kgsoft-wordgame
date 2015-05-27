@@ -28,58 +28,62 @@ package hu.unideb.kgsoft.scrabble;
  * class to update the view.
  */
 public interface GameView {
-    /**
-     * Draws an image of the tile, which is located on the board at the given
-     * row and column indices with the given tile code. Calculates the x and y
-     * coordinates corresponding to the row and column indices on the board, to
-     * draw the image on the graphics surface.
-     * 
-     * @param tileCode
-     *            the unique code of the tile, that has to be drawn
-     * @param row
-     *            the row index of the tile on the board
-     * @param col
-     *            the column index of the tile on the board
-     */
-    public void drawTileOnBoard(int tileCode, int row, int col);
-    
-    public void drawTileOnTray(int tileCode, int index);
-    
-    public void drawTileInHand(int tileCode, double mouseX, double mouseY);
+	/**
+	 * Draws an image of the tile, which is located on the board at the given
+	 * row and column indices with the given tile code. Calculates the x and y
+	 * coordinates corresponding to the row and column indices on the board, to
+	 * draw the image on the graphics surface.
+	 * 
+	 * @param tileCode
+	 *            the unique code of the tile, that has to be drawn
+	 * @param row
+	 *            the row index of the tile on the board
+	 * @param col
+	 *            the column index of the tile on the board
+	 */
+	public void drawTileOnBoard(int tileCode, int row, int col);
 
-    /**
-     * Draws the game board on a graphics surface. It serves as a background for
-     * drawing the letter tiles. It is expected from the implementing class,
-     * that the graphical representation of the tiles on the game board will
-     * reflect their actual position.
-     */
-    public void drawBoard();
+	/**
+	 * Draws a tile on the tray at the given index position. Calculates the x
+	 * and y coordinates on the graphics surface corresponding to the index
+	 * position.
+	 * 
+	 * @param tileCode
+	 *            the unique code of the tile, that has to be drawn
+	 * @param index
+	 *            the index position of the tile on the tray
+	 */
+	public void drawTileOnTray(int tileCode, int index);
 
-    // TODO These probably won't be necessary.
-    /**
-     * Returns the width of the graphics surface on which the tiles and the game
-     * board can be drawn.
-     * 
-     * @return the width of the graphics surface
-     */
-    public double getWidth();
+	/**
+	 * Draws the tile which is in the hand of the player. The x and y
+	 * coordinates of the mouse cursor are provided as parameters.
+	 * 
+	 * @param tileCode
+	 *            the unique code of the tile, that has to be drawn
+	 * @param mouseX
+	 *            the x coordinate of the mouse
+	 * @param mouseY
+	 *            the y coordinate of the mouse
+	 */
+	public void drawTileInHand(int tileCode, double mouseX, double mouseY);
 
-    /**
-     * Returns the height of the graphics surface on which the tiles and the
-     * game board can be drawn.
-     * 
-     * @return the height of the graphics surface
-     */
-    public double getHeight();
+	/**
+	 * Draws the game board on a graphics surface. It serves as a background for
+	 * drawing the letter tiles. It is expected from the implementing class,
+	 * that the graphical representation of the tiles on the game board will
+	 * reflect their actual position.
+	 */
+	public void drawBoard();	
 
-    /**
-     * The view class updates the informations about the state of the game on
-     * the screen. Uses the values from the provided {@link GameState} object as
-     * parameter.
-     * 
-     * @param gameState
-     *            the <code>GameState</code> object
-     */
-    public void updateGameStateInfo(GameState gameState);
+	/**
+	 * The view class updates the informations about the state of the game on
+	 * the screen. Uses the values from the provided {@link GameState} object as
+	 * parameter.
+	 * 
+	 * @param gameState
+	 *            the <code>GameState</code> object
+	 */
+	public void updateGameStateInfo(GameState gameState);
 
 }

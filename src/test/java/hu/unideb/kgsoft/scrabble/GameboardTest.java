@@ -264,17 +264,7 @@ public class GameboardTest {
         board.setTile(2, 8, 0);
         board.setTile(2, 9, 0);
         assertEquals(7, board.calcPoints());
-    }
-
-    @Test
-    public void testGetRowLetters() {
-        Gameboard board = new Gameboard();
-        board.setTile(0, 0, 0);
-        board.setTile(0, 1, 1);
-        board.setTile(0, 2, 2);
-        assertEquals("AÁB", board.getRowLetters(0));
-        assertEquals("", board.getRowLetters(1));
-    }
+    }    
 
     @Test
     public void testWordsAreCorrect() throws UnsupportedEncodingException {

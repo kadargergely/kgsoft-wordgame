@@ -22,19 +22,26 @@ package hu.unideb.kgsoft.scrabble;
  * #L%
  */
 
+/**
+ * The {@code ExistingUserException} is thrown when a user name that needs to be
+ * registered already exists in the database.
+ * 
+ * @author kadar_000
+ *
+ */
 public class ExistingUserException extends RuntimeException {
-    
-    private static final long serialVersionUID = 4973496468100990589L;
 
-    public ExistingUserException(String message, Throwable cause) {
-        super(message, cause);        
-    }
+	private static final long serialVersionUID = 4973496468100990589L;
+	
+	public ExistingUserException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    public ExistingUserException(Throwable cause) {
-        super(cause);        
-    }
-    
-    public ExistingUserException() {
-        super();
-    }
+	public ExistingUserException(Throwable cause) {
+		super(cause);
+	}
+
+	public ExistingUserException() {
+		super();
+	}
 }

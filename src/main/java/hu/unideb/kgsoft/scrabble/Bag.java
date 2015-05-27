@@ -35,93 +35,98 @@ import java.util.Random;
  */
 public class Bag {
 
-    /**
-     * An <code>int</code> array storing how many tiles are still in the bag for
-     * each tile code.
-     */
-    private int[] remaining;
-    /**
-     * The total number of tiles in the bag.
-     */
-    private int total;
+	/**
+	 * An <code>int</code> array storing how many tiles are still in the bag for
+	 * each tile code.
+	 */
+	private int[] remaining;
+	/**
+	 * The total number of tiles in the bag.
+	 */
+	private int total;
 
-    /**
-     * Constructs a new <code>Bag</code> object and fills it with the tiles.
-     */
-    public Bag() {
-        remaining = new int[Letters.getNum()];
-        total = 0;
+	/**
+	 * Constructs a new <code>Bag</code> object and fills it with the tiles.
+	 */
+	public Bag() {
+		remaining = new int[Letters.getNum()];
+		total = 0;
 
-        for (int i = 0; i < remaining.length; i++) {
-            remaining[i] = Letters.getQuantity(i);
-            total += remaining[i];
-        }
+		for (int i = 0; i < remaining.length; i++) {
+			remaining[i] = Letters.getQuantity(i);
+			total += remaining[i];
+		}
+	}
 
-        // System.out.println("Bag total: " + total);
-    }
+	/**
+	 * Constructs a new {@code Bag} object with the given array storing the
+	 * number of tiles left for each tile code.
+	 * 
+	 * @param remaining
+	 *            array storing the number of tiles left for each tile code
+	 */
+	public Bag(int[] remaining) {
+		this.remaining = remaining;
+		total = 0;
+		for (int i : remaining) {
+			total += i;
+		}
+	}
 
-    public Bag(int[] remaining) {
-        this.remaining = remaining;
-        total = 0;
-        for (int i : remaining) {
-            total += i;
-        }
-    }
+	/**
+	 * Returns a random tile code taken out of the bag. The tile will be removed
+	 * from the bag. If there are no more tiles left in the bag, the method
+	 * returns -1.
+	 * 
+	 * @return a random tile code from the bag or -1 if the bag is empty
+	 */
+	public int getRandTile() {
+		if (total > 0) {
+			Random rand = new Random();
+			int randInt = rand.nextInt(total);
 
-    /**
-     * Returns a random tile code taken out of the bag. The tile will be removed
-     * from the bag. If there are no more tiles left in the bag, the method
-     * returns -1.
-     * 
-     * @return a random tile code from the bag or -1 if the bag is empty
-     */
-    public int getRandTile() {
-        if (total > 0) {
-            Random rand = new Random();
-            int randInt = rand.nextInt(total);
-           
-            int i = -1, j = 0;
-            while (j <= randInt) {
-                i++;
-                j += remaining[i];
-            }
+			int i = -1, j = 0;
+			while (j <= randInt) {
+				i++;
+				j += remaining[i];
+			}
 
-            total -= 1;
-            remaining[i] -= 1;            
+			total -= 1;
+			remaining[i] -= 1;
 
-            return i;
-        } else {
-            return -1;
-        }
-    }
+			return i;
+		} else {
+			return -1;
+		}
+	}
 
-    /**
-     * Puts back a tile with the given tile code into the bag.
-     * 
-     * @param code
-     *            the code of the tile that will be put into the bag
-     */
-    public void putBack(int code) {
-        remaining[code] += 1;
-        total += 1;
-    }
+	/**
+	 * Puts back a tile with the given tile code into the bag.
+	 * 
+	 * @param code
+	 *            the code of the tile that will be put into the bag
+	 */
+	public void putBack(int code) {
+		remaining[code] += 1;
+		total += 1;
+	}
 
-    /**
-     * Returns the number of tiles currently in the bag.
-     * 
-     * @return the number of tiles currently in the bag
-     */
-    public int getNumOfTiles() {
-        return total;
-    }
+	/**
+	 * Returns the number of tiles currently in the bag.
+	 * 
+	 * @return the number of tiles currently in the bag
+	 */
+	public int getNumOfTiles() {
+		return total;
+	}
 
-    /**
-     * Returns the array in which the number of tiles left for each letter is
-     * stored. Should be used for testing only.
-     * 
-     * @return the array containing how many tiles are left for each letter
-     */
-    public int[] getRemaining() {
-        return remaining;
-    }
+	/**
+	 * Returns the array in which the number of tiles left for each letter is
+	 * stored. Should be used for testing only.
+	 * 
+	 * @return the array containing how many tiles are left for each letter
+	 */
+	public int[] getRemaining() {
+		return remaining;
+	}
 }

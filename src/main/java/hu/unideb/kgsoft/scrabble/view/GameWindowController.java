@@ -410,19 +410,7 @@ public class GameWindowController implements GameView {
         gc.drawImage(backgroundImage, 0, 0);
         gc.setFill(Color.GREEN);
         gc.fillRect(153, 494, 244, 52);
-    }
-
-    @Override
-    public double getWidth() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public double getHeight() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+    }    
 
     @Override
     public void updateGameStateInfo(GameState gameState) {
