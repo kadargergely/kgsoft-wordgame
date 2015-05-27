@@ -25,6 +25,8 @@ package hu.unideb.kgsoft.scrabble;
 import hu.unideb.kgsoft.scrabble.Gameboard;
 
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.junit.Test;
@@ -275,11 +277,11 @@ public class GameboardTest {
     }
 
     @Test
-    public void testWordsAreCorrect() {
+    public void testWordsAreCorrect() throws UnsupportedEncodingException {
         Dictionary dict = null;
         try {
-            dict = new Dictionary(this.getClass().getResourceAsStream(
-                    "/hu_HU.dic"));
+            dict = new Dictionary(new InputStreamReader(this.getClass().getResourceAsStream(
+                    "/hu_HU.dic"), "UTF-8"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             fail("Dictionary file not found.");

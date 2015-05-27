@@ -23,6 +23,8 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
@@ -31,8 +33,8 @@ import static org.junit.Assert.*;
 public class ControllerTest {    
     
     @Test
-    public void testRedrawTiles() throws FileNotFoundException {
-        Controller ctr = new Controller(this.getClass().getResourceAsStream("/hu_HU.dic"));
+    public void testRedrawTiles() throws FileNotFoundException, UnsupportedEncodingException {
+        Controller ctr = new Controller(new InputStreamReader(this.getClass().getResourceAsStream("/hu_HU.dic"), "UTF-8"));
         Player player = ctr.getPlayer();
         Tray tray = player.getTray();
         Bag bag = ctr.getBag();

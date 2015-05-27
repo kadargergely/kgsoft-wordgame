@@ -23,7 +23,7 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class Dictionary {
      * @throws FileNotFoundException
      *             if the dictionary file couldn't be found
      */
-    public Dictionary(InputStream inputStream) throws FileNotFoundException {
+    public Dictionary(InputStreamReader inputStream) throws FileNotFoundException {
 
         Scanner in = new Scanner(inputStream);        
 

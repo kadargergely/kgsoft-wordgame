@@ -23,6 +23,8 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
@@ -31,8 +33,8 @@ import static org.junit.Assert.*;
 public class DictionaryTest {
     
     @Test
-    public void test() throws FileNotFoundException {
-        Dictionary dict = new Dictionary(this.getClass().getResourceAsStream("/hu_HU.dic"));
+    public void test() throws FileNotFoundException, UnsupportedEncodingException {
+        Dictionary dict = new Dictionary(new InputStreamReader(this.getClass().getResourceAsStream("/hu_HU.dic"), "UTF-8"));
         assertFalse(dict.isCorrect("Duna"));
         assertFalse(dict.isCorrect("FTC"));
         assertFalse(dict.isCorrect("yard"));
