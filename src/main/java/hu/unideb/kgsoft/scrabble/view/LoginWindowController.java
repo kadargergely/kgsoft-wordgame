@@ -23,6 +23,7 @@ package hu.unideb.kgsoft.scrabble.view;
  */
 
 import hu.unideb.kgsoft.scrabble.Controller;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -61,6 +62,21 @@ public class LoginWindowController {
      * method.
      */
     public LoginWindowController() {
+    	String javaVersion = System.getProperty("java.runtime.version");
+    	int majorVersion = Integer.parseInt(String.valueOf(javaVersion.charAt(2)));
+    	String versionAfterUnderline = javaVersion.substring(javaVersion.indexOf("_") + 1);
+    	StringBuilder minorVersionString = new StringBuilder();
+    	for (int i = 0; i < versionAfterUnderline.length(); i++) {
+    		if (Character.isDigit(versionAfterUnderline.charAt(i))) {
+    			minorVersionString.append(versionAfterUnderline.charAt(i));
+    		} else {
+    			break;
+    		}
+    	}
+    	if (!(majorVersion == 8  && Integer.parseInt(minorVersionString.toString()) >= 40)) {
+    		showErrorMessage("Nem megfelelő Java verzió!", "1.8.0_40 vagy annál nagyobb Java verzió szükséges.");
+    		Platform.exit();
+    	}
     }
 
     /**
@@ -68,7 +84,7 @@ public class LoginWindowController {
      * after the fxml file has been loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize() {    	
         passwordAgainLabel.setVisible(false);
         passwordAgainField.setVisible(false);
     }

@@ -23,6 +23,8 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +41,13 @@ public class Main {
      */
     public static void main(String[] args) {
         logger.info("Application started.");
+        logger.info("Using java version " + System.getProperty("java.version"));      
         String dictFile = "/hu_HU.dic";
-        try {            
+        try {        	
             logger.info("Initializing Controller class with dictionary file '" + dictFile + "'...");
-            Controller ctr = new Controller(
-                    Main.class.getResourceAsStream(dictFile));            
+            Controller ctr = new Controller(new InputStreamReader(Main.class.getResourceAsStream(dictFile), "UTF-8"));            
             logger.info("Controller class initialized.");            
-            ScrabbleApp.setMainCtr(ctr);
+            ScrabbleApp.setMainCtr(ctr);            
 
             logger.info("Starting GUI...");
             ScrabbleApp.runApp(args);
@@ -53,7 +55,10 @@ public class Main {
 
         } catch (FileNotFoundException e) {
             logger.error(String.format("Dictionary file '%s' not found!", dictFile));
-        }
+        } catch (UnsupportedEncodingException e) {
+        	logger.error(String.format("Unsupported encoding for the dictionaty file '%s'.", dictFile));
+			e.printStackTrace();
+		}
     }
 
 }

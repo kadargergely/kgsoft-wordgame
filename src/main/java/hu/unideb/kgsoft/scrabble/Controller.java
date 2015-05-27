@@ -32,8 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-
+import java.io.InputStreamReader;
 import static hu.unideb.kgsoft.scrabble.Main.logger;
 
 /**
@@ -94,7 +93,7 @@ public class Controller {
      * @throws FileNotFoundException
      *             if the file couldn't be found
      */
-    public Controller(InputStream inputStream) throws FileNotFoundException {
+    public Controller(InputStreamReader inputStream) throws FileNotFoundException {
         logger.info("Controller class initialization...");
         userDAO = new UserDAO();
         savedGameDAO = new SavedGameDAO();
