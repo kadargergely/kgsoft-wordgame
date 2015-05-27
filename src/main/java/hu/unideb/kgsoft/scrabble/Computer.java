@@ -79,8 +79,7 @@ public class Computer {
         boolean connected = false;
 
         byte[] lettersFromTray = DictWord
-                .newWord(tray.getLettersAsString().toLowerCase()).getAuxData()
-                .clone();
+                .newWord(tray.getLettersAsString().toLowerCase()).getNumOfLetters();
 
         int i = row;
         int j = col;
@@ -94,7 +93,7 @@ public class Computer {
                         placeable = false;
                     } else {
                         jokerTileIndices.add(k);
-                        lettersFromTray[Letters.JOKER_CODE] -= 1;
+                        lettersFromTray[Letters.JOKER_CODE] -= 1;                        
                     }
                 } else {
                     lettersFromTray[actLetterCode] -= 1;

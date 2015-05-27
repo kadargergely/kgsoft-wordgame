@@ -250,8 +250,7 @@ public class Controller {
     public void computerReady() {
 
         List<String> playedWords = gameBoard.getPlayedWords();
-        if (playedWords == null) {
-            System.out.println("No words played by the computer.");
+        if (playedWords == null) {            
             if (bag.getNumOfTiles() == 0) {
                 logger.info("Computer passes its turn.");
                 numOfPasses++;
@@ -394,10 +393,7 @@ public class Controller {
         gameState.setLastWordsPoints(0);
         view.updateGameStateInfo(gameState);
         updateGameView();
-        menuBarCtr.saveGameDisabled(false);
-
-        System.out.println();
-        System.out.println();
+        menuBarCtr.saveGameDisabled(false);        
 
         view.computerThread(computer, gameBoard, dict);
     }
@@ -422,10 +418,7 @@ public class Controller {
         menuBarCtr.saveGameDisabled(false);
 
         view.updateGameStateInfo(gameState);
-        updateGameView();
-
-        System.out.println();
-        System.out.println();
+        updateGameView();        
 
         view.computerThread(computer, gameBoard, dict);
     }

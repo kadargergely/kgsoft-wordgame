@@ -230,20 +230,35 @@ public class DictWord {
         return retVal;
     }
 
+    /**
+     * Returns the number of joker tiles in the word.
+     * 
+     * @return the number of joker tiles in the word
+     */
     public int getJokers() {
         return auxData[38];
     }
 
-    public byte[] getAuxData() {
-        return auxData;
+    /**
+     * Returns an array that stores the number of letters in the word for each
+     * tile code. The array is in fact a copy of the auxiliary data that the
+     * object uses, this way it is modifiable without modifying the objects
+     * data.
+     * 
+     * @return an array that stores the number of letters in the word for each
+     *         tile code
+     */
+    public byte[] getNumOfLetters() {
+        return auxData.clone();
     }
 
+    /**
+     * Returns the word wrapped by this class as a string.
+     * 
+     * @return the word wrapped by this class as a string
+     */
     public String getWord() {
         return word;
     }
 
-    @Override
-    public String toString() {
-        return word;
-    }
 }
