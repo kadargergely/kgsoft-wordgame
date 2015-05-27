@@ -34,34 +34,42 @@ import oracle.jdbc.OracleConnection;
 
 import static hu.unideb.kgsoft.scrabble.Main.logger;
 
-public class ConnectionFactory {   
-    
-    private static ConnectionFactory factory = new ConnectionFactory();    
-    
-    private ConnectionFactory() {      
-        try {            
+/**
+ * The <code>ConnectionFactory</code> class provides access to the game
+ * database, which can contain saved games for registered users.
+ * 
+ * @author gergo
+ *
+ */
+public class ConnectionFactory {
+
+    private static ConnectionFactory factory = new ConnectionFactory();
+
+    private ConnectionFactory() {
+        try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
             logger.info("Oracle JDBC driver successfully registered.");
         } catch (SQLException e) {
             logger.error("Couldn't register JDBC driver.");
-            e.printStackTrace();         
+            e.printStackTrace();
         }
     }
-    
-    private OracleConnection createConnection() throws IOException {        
+
+    private OracleConnection createConnection() throws IOException {
         Properties prop = new Properties();
-        InputStream inputStream = this.getClass().getResourceAsStream("/oracleUser.properties");
-        
+        InputStream inputStream = this.getClass().getResourceAsStream(
+                "/oracleUser.properties");
+
         if (inputStream != null) {
             prop.load(inputStream);
-        } else {            
+        } else {
             throw new FileNotFoundException();
         }
-        
-        String url = prop.getProperty("url");        
-        String user = prop.getProperty("user");        
-        String passwd = prop.getProperty("passwd");        
-        
+
+        String url = prop.getProperty("url");
+        String user = prop.getProperty("user");
+        String passwd = prop.getProperty("passwd");
+
         Connection connection = null;
         OracleConnection oraConn = null;
         try {
@@ -69,12 +77,29 @@ public class ConnectionFactory {
             oraConn = connection.unwrap(OracleConnection.class);
             logger.info("Connection to the database created.");
         } catch (SQLException e) {
-            logger.error(String.format("Failed to create connection to the database: ", e.getMessage()));
-            e.printStackTrace();            
+            logger.error(String.format(
+                    "Failed to create connection to the database: ",
+                    e.getMessage()));
+            e.printStackTrace();
         }
         return oraConn;
     }
-    
+
+    /**
+     * Returns a new connection of type <code>OracleConnection</code>. All
+     * communication with the game database is performed through connections
+     * returned by this method.
+     * <p>
+     * Access to the Oracle server can be gained with a user name and a
+     * password. A separate property file contains these. If the file cannot be
+     * found, an exception will be thrown.
+     * 
+     * @return an <code>OracleConnection</code> object providing the
+     *         communication channel with the game server
+     * @throws IOException
+     *             when the file containing the database user name and password
+     *             is missing
+     */
     public static OracleConnection getConnection() throws IOException {
         return factory.createConnection();
     }

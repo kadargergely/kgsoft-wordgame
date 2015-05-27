@@ -24,19 +24,28 @@ package hu.unideb.kgsoft.scrabble;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The <code>Dictionary</code> class wraps a list of {@link DictWord} objects
+ * containing the words that can be played during the game. Provides a method
+ * for checking if the list contains a given word, and a method that returns the
+ * words that can be formed using the given letters.
+ * 
+ * @author gergo
+ *
+ */
 public class Dictionary {
 
     private List<DictWord> dict = new ArrayList<DictWord>();
 
     /**
      * Constructor for creating a <code>Dictionary</code> object based on a
-     * dictionary file.
+     * dictionary file. The wrapped list of {@link DictWord} objects is filled.
      * 
      * @param inputStream
      *            a dictionary file, containing words
@@ -45,7 +54,7 @@ public class Dictionary {
      */
     public Dictionary(InputStream inputStream) throws FileNotFoundException {
 
-        Scanner in = new Scanner(inputStream);        
+        Scanner in = new Scanner(inputStream);
 
         String line = null;
         while (in.hasNext()) {
@@ -59,19 +68,21 @@ public class Dictionary {
             }
         }
 
-        Collections.sort(dict);
-
+        Collections.sort(dict, new Comparator<DictWord>() {
+            @Override
+            public int compare(DictWord o1, DictWord o2) {
+                return Integer.compare(o1.getWord().length(), o2.getWord()
+                        .length());
+            }
+        });
+        
         in.close();
     }
 
-    public void print(PrintStream out) {
-        for (DictWord word : dict) {
-            out.println(word);
-        }
-    }
-
     /**
-     * Returns a list of words, that can be formed using the given letters.
+     * Returns the words as a list of strings, that can be formed using the
+     * given letters. The letters are given in the form of a
+     * <code>DictWord</code> object.
      * 
      * @param letters
      *            the letters, represented as a <code>DictWord</code> object
@@ -102,8 +113,8 @@ public class Dictionary {
             if (dword.equals(word.toLowerCase())) {
                 return true;
             }
-        }        
-        
+        }
+
         return false;
     }
 }

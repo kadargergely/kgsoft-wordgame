@@ -26,13 +26,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Note: this class has a natural ordering that is inconsistent with equals.
+ * The {@code DictWord} class wraps a word as a string and an array of integers.
+ * The number of elements in the array equals the number of different tile codes
+ * that exist in the game. The elements of the array store how many letters are
+ * in the word with the tile code that equals the element's index.
+ * <p>
+ * Using the auxiliary data, can be decided more effectively if a word can be
+ * formed using a given set of letters, where the word and the letters are both
+ * represented as a {@code DictWord} object.
+ * 
+ * @author gergo
+ *
  */
-public class DictWord implements Comparable<DictWord> {
+public class DictWord {
 
     private final String word;
     private final byte[] auxData;
 
+    /**
+     * Returns a new {@code DictWord} object which wraps the string given. If
+     * the string contains illegal characters (characters that are not lower
+     * case letters in the Hungarian language), the method returns {@code null}.
+     * 
+     * @param word
+     *            the word that will be packed
+     * @return a reference to the newly created {@code DictWord} object or
+     *         {@code null} if the word contains illegal characters
+     */
     public static DictWord newWord(String word) {
 
         boolean legal = true;
@@ -101,6 +121,13 @@ public class DictWord implements Comparable<DictWord> {
         }
     }
 
+    /**
+     * Returns a list of strings containing the letters that form the word
+     * wrapped by the {@code DictWord} object. Needed because of letters with
+     * two characters.
+     * 
+     * @return a list of the letters of the wrapped word
+     */
     public List<String> toStringList() {
         List<String> list = new ArrayList<String>();
 
@@ -146,6 +173,15 @@ public class DictWord implements Comparable<DictWord> {
         return list;
     }
 
+    /**
+     * Returns {@code true} if the word wrapped by the {@code DictWord} object
+     * given as parameter equals the word wrapped by this object.
+     * 
+     * @param other
+     *            the {@code DictWord} object which will be compared with this
+     * @return {@code true} if the wrapped values are the same, {@code false}
+     *         otherwise
+     */
     public boolean equals(DictWord other) {
         if (this.word.equals(other.word)) {
             return true;
@@ -154,6 +190,16 @@ public class DictWord implements Comparable<DictWord> {
         }
     }
 
+    /**
+     * Returns {@code true} if the wrapped string by this object equals the
+     * string given.
+     * 
+     * @param word
+     *            the string that will be compared with the wrapped value of
+     *            this object
+     * @return {@code true} if the wrapped value equals the string given,
+     *         {@code false} otherwise
+     */
     public boolean equals(String word) {
         if (this.word.equals(word)) {
             return true;
@@ -162,6 +208,11 @@ public class DictWord implements Comparable<DictWord> {
         }
     }
 
+    /**
+     * 
+     * @param letters
+     * @return
+     */
     public boolean playable(DictWord letters) {
         boolean retVal = true;
         int jokers = letters.getJokers();
@@ -187,20 +238,12 @@ public class DictWord implements Comparable<DictWord> {
         return auxData;
     }
 
-    @Override
-    public String toString() {
+    public String getWord() {
         return word;
     }
 
     @Override
-    public int compareTo(DictWord o) {
-        if (this.word.length() <= o.word.length()) {
-            if (this.word.length() < o.word.length())
-                return -1;
-            else
-                return 0;
-        } else {
-            return 1;
-        }
+    public String toString() {
+        return word;
     }
 }

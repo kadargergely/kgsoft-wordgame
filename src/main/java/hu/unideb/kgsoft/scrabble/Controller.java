@@ -62,7 +62,7 @@ import static hu.unideb.kgsoft.scrabble.Main.logger;
  */
 public class Controller {
 
-    //private static Logger logger = LoggerFactory.getLogger(Controller.class);
+    // private static Logger logger = LoggerFactory.getLogger(Controller.class);
 
     private Dictionary dict;
     private Gameboard gameBoard;
@@ -447,7 +447,7 @@ public class Controller {
      * Updates the game view. Updates the appropriate methods of the view class
      * to achieve this. The board and the tiles will be painted.
      */
-    public void updateGameView() {        
+    public void updateGameView() {
         view.drawBoard();
         for (int i = 0; i < Gameboard.BOARD_SIZE; i++) {
             for (int j = 0; j < Gameboard.BOARD_SIZE; j++) {
@@ -501,7 +501,9 @@ public class Controller {
     public boolean login(String username, String passwd) {
         try {
             if (userDAO.authenticateUser(username, passwd)) {
-                logger.info(String.format("User with user name '%s' successfully logged in.", username));
+                logger.info(String.format(
+                        "User with user name '%s' successfully logged in.",
+                        username));
                 playerName = username;
             } else {
                 logger.info("Coludn't log in! Wrong user name or password.");
@@ -540,10 +542,12 @@ public class Controller {
         try {
             if (passwd.equals(passwdAgain)) {
                 if (userDAO.registerUser(username, passwd)) {
-                    logger.info(String.format("New user %s successfully registered.", username));
+                    logger.info(String.format(
+                            "New user %s successfully registered.", username));
                     playerName = username;
                 } else {
-                    logger.warn(String.format("Couldn't register new user. Database is unreachable."));
+                    logger.warn(String
+                            .format("Couldn't register new user. Database is unreachable."));
                     loginView
                             .showErrorMessage(
                                     "Nem lehet léltrehozni az új felhasználót!",
@@ -557,7 +561,9 @@ public class Controller {
                 return false;
             }
         } catch (ExistingUserException e) {
-            logger.info(String.format("Couldn't register new user. User name '%s' already exists.", username));
+            logger.info(String
+                    .format("Couldn't register new user. User name '%s' already exists.",
+                            username));
             loginView.showErrorMessage(
                     "Nem lehet léltrehozni az új felhasználót!",
                     "A felhasználónév már létezik.");
@@ -737,14 +743,32 @@ public class Controller {
         this.menuBarCtr = menuBarCtr;
     }
 
+    /**
+     * Returns the <code>Player</code> object which represents the human player.
+     * 
+     * @return the <code>Player</code> object which represents the human player
+     */
     Player getPlayer() {
         return player;
     }
 
+    /**
+     * Returns the <code>Bag</code> object which represents the bag from which
+     * the players can draw tiles.
+     * 
+     * @return the <code>Bag</code> object
+     */
     Bag getBag() {
         return bag;
     }
 
+    /**
+     * Sets a new value for the boolean field which determines if the current
+     * turn is the human player's.
+     * 
+     * @param value
+     *            the boolean value to set
+     */
     void setPlayersTurn(boolean value) {
         this.playersTurn = value;
     }

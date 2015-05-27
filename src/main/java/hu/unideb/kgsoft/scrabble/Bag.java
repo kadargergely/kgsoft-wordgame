@@ -79,23 +79,7 @@ public class Bag {
         if (total > 0) {
             Random rand = new Random();
             int randInt = rand.nextInt(total);
-
-//            System.out.println("-----------LETTER FROM BAG-----------");
-//            System.out.println("Total: " + total);
-//            System.out.println("randInt: " + randInt);
-//            int counter = 0;
-//            for (int i = 0; i < Letters.getNum(); i++) {
-//                for (int j = 0; j < remaining[i]; j++) {
-//                    if (counter == randInt) {
-//                        System.out.print(" " + Letters.getL(i) + " ");
-//                    } else {
-//                        System.out.print(Letters.getL(i));
-//                    }
-//                    counter++;
-//                }
-//            }
-//            System.out.println();
-
+           
             int i = -1, j = 0;
             while (j <= randInt) {
                 i++;
@@ -103,12 +87,7 @@ public class Bag {
             }
 
             total -= 1;
-            remaining[i] -= 1;
-            // TODO debug
-
-//            System.out.println("Random letter: " + Letters.getL(i) + " ("
-//                    + remaining[i] + ")");
-//            System.out.println("-------------------------------------");
+            remaining[i] -= 1;            
 
             return i;
         } else {
