@@ -27,56 +27,111 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.StringJoiner;
 
-public class Utils {
-    private static MessageDigest md;
+import static hu.unideb.kgsoft.scrabble.Main.logger;
 
-    public static String processPassword(String passwd) {
-        try {
-            md = MessageDigest.getInstance("MD5");
-            byte[] passBytes = passwd.getBytes();
-            md.reset();
-            byte[] digested = md.digest(passBytes);
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < digested.length; i++) {
-                sb.append(Integer.toHexString(0xff & digested[i]));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            // TODO log nincs ilyen algoritmus
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
-    public static Integer[] toIntegerArray(int[] primitiveArray) {
-        Integer[] newArray = new Integer[primitiveArray.length];
-        for (int i = 0; i < primitiveArray.length; i++) {
-            newArray[i] = Integer.valueOf(primitiveArray[i]);
-        }
-        return newArray;
-    }
-    
-    public static int[] toIntArray(Integer[] integerArray) {
-        int[] newArray = new int[integerArray.length];
-        for (int i = 0; i < integerArray.length; i++) {
-            newArray[i] = integerArray[i];
-        }
-        return newArray;
-    }
-    
-    public static int[] toIntArray(BigDecimal[] bigDecimalArray) {
-        int[] newArray = new int[bigDecimalArray.length];
-        for (int i = 0; i < bigDecimalArray.length; i++) {
-            newArray[i] = bigDecimalArray[i].intValue();
-        }
-        return newArray;
-    }
-    
-    public static String stringArrayToString(String[] strArray) {
-        StringJoiner sj = new StringJoiner("', '", "'", "'");
-        for (String str : strArray) {
-            sj.add(str);
-        }
-        return sj.toString();
-    }
+/**
+ * The {@code Utils} class provides static methods for performing common tasks
+ * used by other classes.
+ * 
+ * @author gergo
+ *
+ */
+public class Utils {
+	private static MessageDigest md;
+
+	/**
+	 * Returns a string containing the encrypted version of the string given as
+	 * parameter. Encryption is performed using the MD5 algorithm. If a problem
+	 * occurred during the process, {@code null} is returned.
+	 * 
+	 * @param passwd
+	 *            the string to be encrypted
+	 * @return the encrypted string, or {@code null} if the encryption failed
+	 */
+	public static String processPassword(String passwd) {
+		try {
+			md = MessageDigest.getInstance("MD5");
+			byte[] passBytes = passwd.getBytes();
+			md.reset();
+			byte[] digested = md.digest(passBytes);
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < digested.length; i++) {
+				sb.append(Integer.toHexString(0xff & digested[i]));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("No algorithm for password encryption called MD5");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Returns an array of {@code Integers} objects containing the integers from
+	 * the {@code int} array given.
+	 * 
+	 * @param primitiveArray
+	 *            the array of primitive {@code int} type to be converted
+	 * @return a new {@code Integer} array created using the array given
+	 */
+	public static Integer[] toIntegerArray(int[] primitiveArray) {
+		Integer[] newArray = new Integer[primitiveArray.length];
+		for (int i = 0; i < primitiveArray.length; i++) {
+			newArray[i] = Integer.valueOf(primitiveArray[i]);
+		}
+		return newArray;
+	}
+
+	/**
+	 * Returns a new primitive {@code int} array created from the
+	 * {@code Integer} array given.
+	 * 
+	 * @param integerArray
+	 *            an array of {@code Integer} objects
+	 * @return a new {@code int} array created from the {@code Integer} array
+	 *         given.
+	 */
+	public static int[] toIntArray(Integer[] integerArray) {
+		int[] newArray = new int[integerArray.length];
+		for (int i = 0; i < integerArray.length; i++) {
+			newArray[i] = integerArray[i];
+		}
+		return newArray;
+	}
+
+	/**
+	 * Returns a new primitive {@code int} array created from the
+	 * {@code BigDecimal} array given. Note that this conversion can lose
+	 * information.
+	 * 
+	 * @param bigDecimalArray
+	 *            an array of {@code BigDecimal} objects
+	 * @return a new {@code int} array created from the {@code BigDecimal} array
+	 *         given.
+	 */
+	public static int[] toIntArray(BigDecimal[] bigDecimalArray) {
+		int[] newArray = new int[bigDecimalArray.length];
+		for (int i = 0; i < bigDecimalArray.length; i++) {
+			newArray[i] = bigDecimalArray[i].intValue();
+		}
+		return newArray;
+	}
+
+	/**
+	 * Similar to the {@code toString} method of lists. This method is used when
+	 * a sequence of string has to be inserted into the database. Returns the
+	 * strings from the array between apostrophes and separated by commas.
+	 * 
+	 * @param strArray
+	 *            the array of strings
+	 * @return the string containing the strings from the array between
+	 *         apostrophes and separated by commas
+	 */
+	public static String stringArrayToString(String[] strArray) {
+		StringJoiner sj = new StringJoiner("', '", "'", "'");
+		for (String str : strArray) {
+			sj.add(str);
+		}
+		return sj.toString();
+	}
 }

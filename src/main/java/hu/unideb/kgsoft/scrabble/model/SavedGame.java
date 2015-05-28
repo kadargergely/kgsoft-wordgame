@@ -24,116 +24,149 @@ package hu.unideb.kgsoft.scrabble.model;
 
 import hu.unideb.kgsoft.scrabble.Field;
 
+/**
+ * The {@code SavedGame} class is a model class which represents a saved game.
+ * It contains all the data needed to load the game.
+ * 
+ * @author gergo
+ *
+ */
 public class SavedGame {
-    
-    private Field[][] fields;
-    private int[] playerTray;
-    private int[] computerTray;
-    private int tileInHand;
-    private boolean playersTurn;
-    private int playerScore;
-    private int computerScore;
-    private String[] lastWords;
-    private int lastWordsPoints;
-    private int[] bagRemaining;
-    
-    public SavedGame(Field[][] fields, int[] playerTray, int[] computerTray,
-            int tileInHand, int playersTurn, int playerScore,
-            int computerScore, String[] lastWords, int lastWordsPoints,
-            int[] bagRemaining) {
-        this.fields = fields;
-        this.playerTray = playerTray;
-        this.computerTray = computerTray;
-        this.tileInHand = tileInHand;
-        if (playersTurn == 1) {
-            this.playersTurn = true;
-        } else if (playersTurn == 0) {
-            this.playersTurn = false;
-        }
-        this.playerScore = playerScore;
-        this.computerScore = computerScore;
-        this.lastWords = lastWords;
-        this.lastWordsPoints = lastWordsPoints;
-        this.bagRemaining = bagRemaining;
-    }
 
-    public Field[][] getFields() {
-        return fields;
-    }
+	private Field[][] fields;
+	private int[] playerTray;
+	private int[] computerTray;
+	private int tileInHand;
+	private boolean playersTurn;
+	private int playerScore;
+	private int computerScore;
+	private String[] lastWords;
+	private int lastWordsPoints;
+	private int[] bagRemaining;
 
-    public void setFields(Field[][] fields) {
-        this.fields = fields;
-    }
+	/**
+	 * Constructs a new {@code SavedGame} object initializing all its fields
+	 * with the values given as parameters.
+	 * 
+	 * @param fields
+	 *            the fields of the game board
+	 * @param playerTray
+	 *            the letter tile codes from the player's tray
+	 * @param computerTray
+	 *            the letter tile codes from the computer's tray
+	 * @param tileInHand
+	 *            the tile code of the tile in the player's hand
+	 * @param playersTurn
+	 *            {@code true} if the current turn is the player's,
+	 *            {@code false} otherwise
+	 * @param playerScore
+	 *            the current score of the player
+	 * @param computerScore
+	 *            the current score of the computer
+	 * @param lastWords
+	 *            the words played in the preceding turn
+	 * @param lastWordsPoints
+	 *            the points scored in the preceding turn
+	 * @param bagRemaining
+	 *            the number of tiles left in the bag for each tile code
+	 */
+	public SavedGame(Field[][] fields, int[] playerTray, int[] computerTray,
+			int tileInHand, int playersTurn, int playerScore,
+			int computerScore, String[] lastWords, int lastWordsPoints,
+			int[] bagRemaining) {
+		this.fields = fields;
+		this.playerTray = playerTray;
+		this.computerTray = computerTray;
+		this.tileInHand = tileInHand;
+		if (playersTurn == 1) {
+			this.playersTurn = true;
+		} else if (playersTurn == 0) {
+			this.playersTurn = false;
+		}
+		this.playerScore = playerScore;
+		this.computerScore = computerScore;
+		this.lastWords = lastWords;
+		this.lastWordsPoints = lastWordsPoints;
+		this.bagRemaining = bagRemaining;
+	}
 
-    public int[] getPlayerTray() {
-        return playerTray;
-    }
+	public Field[][] getFields() {
+		return fields;
+	}
 
-    public void setPlayerTray(int[] playerTray) {
-        this.playerTray = playerTray;
-    }
+	public void setFields(Field[][] fields) {
+		this.fields = fields;
+	}
 
-    public int[] getComputerTray() {
-        return computerTray;
-    }
+	public int[] getPlayerTray() {
+		return playerTray;
+	}
 
-    public void setComputerTray(int[] computerTray) {
-        this.computerTray = computerTray;
-    }
+	public void setPlayerTray(int[] playerTray) {
+		this.playerTray = playerTray;
+	}
 
-    public int getTileInHand() {
-        return tileInHand;
-    }
+	public int[] getComputerTray() {
+		return computerTray;
+	}
 
-    public void setTileInHand(int tileInHand) {
-        this.tileInHand = tileInHand;
-    }
+	public void setComputerTray(int[] computerTray) {
+		this.computerTray = computerTray;
+	}
 
-    public boolean isPlayersTurn() {
-        return playersTurn;
-    }
+	public int getTileInHand() {
+		return tileInHand;
+	}
 
-    public void setPlayersTurn(boolean playersTurn) {
-        this.playersTurn = playersTurn;
-    }
+	public void setTileInHand(int tileInHand) {
+		this.tileInHand = tileInHand;
+	}
 
-    public int getPlayerScore() {
-        return playerScore;
-    }
+	public boolean isPlayersTurn() {
+		return playersTurn;
+	}
 
-    public void setPlayerScore(int playerScore) {
-        this.playerScore = playerScore;
-    }
+	public void setPlayersTurn(boolean playersTurn) {
+		this.playersTurn = playersTurn;
+	}
 
-    public int getComputerScore() {
-        return computerScore;
-    }
+	public int getPlayerScore() {
+		return playerScore;
+	}
 
-    public void setComputerScore(int computerScore) {
-        this.computerScore = computerScore;
-    }
+	public void setPlayerScore(int playerScore) {
+		this.playerScore = playerScore;
+	}
 
-    public String[] getLastWords() {
-        return lastWords;
-    }
+	public int getComputerScore() {
+		return computerScore;
+	}
 
-    public void setLastWords(String[] lastWords) {
-        this.lastWords = lastWords;
-    }
+	public void setComputerScore(int computerScore) {
+		this.computerScore = computerScore;
+	}
 
-    public int getLastWordsPoints() {
-        return lastWordsPoints;
-    }
+	public String[] getLastWords() {
+		return lastWords;
+	}
 
-    public void setLastWordsPoints(int lastWordsPoints) {
-        this.lastWordsPoints = lastWordsPoints;
-    }
+	public void setLastWords(String[] lastWords) {
+		this.lastWords = lastWords;
+	}
 
-    public int[] getBagRemaining() {
-        return bagRemaining;
-    }
+	public int getLastWordsPoints() {
+		return lastWordsPoints;
+	}
 
-    public void setBagRemaining(int[] bagRemaining) {
-        this.bagRemaining = bagRemaining;
-    }    
+	public void setLastWordsPoints(int lastWordsPoints) {
+		this.lastWordsPoints = lastWordsPoints;
+	}
+
+	public int[] getBagRemaining() {
+		return bagRemaining;
+	}
+
+	public void setBagRemaining(int[] bagRemaining) {
+		this.bagRemaining = bagRemaining;
+	}
 }

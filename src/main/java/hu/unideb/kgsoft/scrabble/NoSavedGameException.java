@@ -22,19 +22,27 @@ package hu.unideb.kgsoft.scrabble;
  * #L%
  */
 
-public class NoSavedGameException extends RuntimeException {    
-    
-    private static final long serialVersionUID = 510758124854850237L;
+/**
+ * The {@code NoSavedGameException} is thrown when there is no saved game in the
+ * central database, and an instance of the {@code SavedGameDAO} class is trying
+ * to load one.
+ * 
+ * @author gergo
+ *
+ */
+public class NoSavedGameException extends RuntimeException {
 
-    public NoSavedGameException(String message, Throwable cause) {
-        super(message, cause);        
-    }
+	private static final long serialVersionUID = 510758124854850237L;
 
-    public NoSavedGameException(Throwable cause) {
-        super(cause);        
-    }
-    
-    public NoSavedGameException() {
-        super();
-    }
+	public NoSavedGameException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public NoSavedGameException(Throwable cause) {
+		super(cause);
+	}
+
+	public NoSavedGameException() {
+		super();
+	}
 }
