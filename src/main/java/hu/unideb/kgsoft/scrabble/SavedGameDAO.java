@@ -227,10 +227,8 @@ public class SavedGameDAO {
 				pst.setInt(8, savedGame.getLastWordsPoints());
 				((OraclePreparedStatement) pst).setARRAY(9,
 						((OracleConnection) connection).createARRAY("T_BAG",
-								bagRemainingInteger));
-				System.out.println("meg elek!");
-				pst.executeUpdate();
-				System.out.println("mar nem");
+								bagRemainingInteger));				
+				pst.executeUpdate();				
 			} else if (rset.getInt(1) == 0) {
 				PreparedStatement pst = connection
 						.prepareStatement("insert into saved_games values("
@@ -262,16 +260,13 @@ public class SavedGameDAO {
 					.format("update saved_games set last_words=t_words(%s) where username='%s'",
 							Utils.stringArrayToString(savedGame.getLastWords()),
 							username));
-
-			System.out.println("id select");
+			
 			rset = st
 					.executeQuery("select saved_game_id from saved_games where username='"
 							+ username + "'");
 			if (rset.next()) {
-				int id = rset.getInt(1);
-				System.out.println("delete");
+				int id = rset.getInt(1);				
 				st.executeUpdate("delete from fields where saved_game_id=" + id);
-				System.out.println("insert");
 				insertFields(id, savedGame.getFields());
 			}
 		} catch (SQLException e) {

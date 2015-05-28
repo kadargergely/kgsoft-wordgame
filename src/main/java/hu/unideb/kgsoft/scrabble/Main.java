@@ -22,13 +22,18 @@ package hu.unideb.kgsoft.scrabble;
  * #L%
  */
 
+import static hu.unideb.kgsoft.scrabble.Main.logger;
+
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import javafx.application.Platform;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import hu.unideb.kgsoft.scrabble.view.JavaVersionMessage;
 import hu.unideb.kgsoft.scrabble.view.ScrabbleApp;
 
 public class Main {
@@ -41,24 +46,40 @@ public class Main {
      */
     public static void main(String[] args) {
         logger.info("Application started.");
-        logger.info("Using java version " + System.getProperty("java.version"));      
-        String dictFile = "/hu_HU.dic";
-        try {        	
-            logger.info("Initializing Controller class with dictionary file '" + dictFile + "'...");
-            Controller ctr = new Controller(new InputStreamReader(Main.class.getResourceAsStream(dictFile), "UTF-8"));            
-            logger.info("Controller class initialized.");            
-            ScrabbleApp.setMainCtr(ctr);            
+        String javaVersion = System.getProperty("java.runtime.version");
+        logger.info("Using java version " + javaVersion);        
+    	int majorVersion = Integer.parseInt(String.valueOf(javaVersion.charAt(2)));
+    	String versionAfterUnderline = javaVersion.substring(javaVersion.indexOf("_") + 1);
+    	StringBuilder minorVersionString = new StringBuilder();
+    	for (int i = 0; i < versionAfterUnderline.length(); i++) {
+    		if (Character.isDigit(versionAfterUnderline.charAt(i))) {
+    			minorVersionString.append(versionAfterUnderline.charAt(i));
+    		} else {
+    			break;
+    		}
+    	}
+    	if (!(majorVersion == 8  && Integer.parseInt(minorVersionString.toString()) >= 40)) {
+    		logger.error("Java version 1.8.0_40 or later required, please update Java.");
+    		JavaVersionMessage.showMessage(args);
+    	} else {
+    		String dictFile = "/hu_HU.dic";
+            try {        	
+                logger.info("Initializing Controller class with dictionary file '" + dictFile + "'...");
+                Controller ctr = new Controller(new InputStreamReader(Main.class.getResourceAsStream(dictFile), "UTF-8"));            
+                logger.info("Controller class initialized.");            
+                ScrabbleApp.setMainCtr(ctr);            
 
-            logger.info("Starting GUI...");
-            ScrabbleApp.runApp(args);
-            logger.info("GUI exited.");
+                logger.info("Starting GUI...");
+                ScrabbleApp.runApp(args);
+                logger.info("GUI exited.");
 
-        } catch (FileNotFoundException e) {
-            logger.error(String.format("Dictionary file '%s' not found!", dictFile));
-        } catch (UnsupportedEncodingException e) {
-        	logger.error(String.format("Unsupported encoding for the dictionaty file '%s'.", dictFile));
-			e.printStackTrace();
-		}
+            } catch (FileNotFoundException e) {
+                logger.error(String.format("Dictionary file '%s' not found!", dictFile));
+            } catch (UnsupportedEncodingException e) {
+            	logger.error(String.format("Unsupported encoding for the dictionaty file '%s'.", dictFile));
+    			e.printStackTrace();
+    		}
+    	}        
     }
 
 }

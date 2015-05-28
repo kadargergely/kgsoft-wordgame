@@ -27,15 +27,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-import org.omg.CORBA.VersionSpecHelper;
-
 import hu.unideb.kgsoft.scrabble.Computer;
 import hu.unideb.kgsoft.scrabble.Controller;
 import hu.unideb.kgsoft.scrabble.Dictionary;
 import hu.unideb.kgsoft.scrabble.GameState;
 import hu.unideb.kgsoft.scrabble.GameView;
 import hu.unideb.kgsoft.scrabble.Gameboard;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -353,8 +350,7 @@ public class GameWindowController implements GameView {
     public void saveGameThread() {
         Task<Void> task = new Task<Void>() {
             @Override
-            protected Void call() throws Exception {
-                System.out.println("Saving game...");
+            protected Void call() throws Exception {                
                 mainCtr.saveGame();
                 return null;
             }
@@ -521,8 +517,7 @@ public class GameWindowController implements GameView {
             if (!computerThinkingIndicator.isVisible()) {
                 computerThinkingIndicator.setVisible(true);
             }
-        }
-        logger.info("Game state updated.");
+        }        
     }
 
     public String getLetterFromUser() {

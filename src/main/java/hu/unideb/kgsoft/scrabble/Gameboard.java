@@ -805,8 +805,7 @@ public class Gameboard {
 	 *         tiles placed on the board in the current turn, or there is at
 	 *         least one grammatically incorrect word.
 	 */
-	public boolean wordsAreCorrect(Dictionary dict) {
-		// System.out.println("Movable tiles: " + movableTiles);
+	public boolean wordsAreCorrect(Dictionary dict) {		
 		List<String> playedWords = getPlayedWords();
 		if (playedWords == null) {
 			return false;

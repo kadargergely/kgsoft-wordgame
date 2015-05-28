@@ -143,6 +143,7 @@ public class Controller {
 
         view.updateGameStateInfo(gameState);
         updateGameView();
+        logger.info("Game started.");
     }
 
     /**
@@ -362,16 +363,7 @@ public class Controller {
         view.updateGameStateInfo(gameState);
         updateGameView();
         menuBarCtr.saveGameDisabled(false);
-
-        // TODO debug
-        // StringJoiner sj = new StringJoiner(", ", "Computer's letters: ", "");
-        // for (int code : computer.getTray().getLetters()) {
-        // sj.add(Letters.getL(code));
-        // }
-        // System.out.println(sj);
-        // System.out.println();
-        // System.out.println();
-
+        
         view.computerThread(computer, gameBoard, dict);
     }
 

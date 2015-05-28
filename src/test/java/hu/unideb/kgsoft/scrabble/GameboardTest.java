@@ -163,6 +163,11 @@ public class GameboardTest {
         assertEquals(true, board.isLegal(false));
         board.pickUpTile(7, 6);
         assertEquals(false, board.isLegal(false));
+        board.finalizeFields();
+        
+        Gameboard newBoard = new Gameboard(board.getFields());
+        newBoard.setTile(14, 14, 0);
+        assertEquals(false, board.isLegal(false));
     }
 
     @Test

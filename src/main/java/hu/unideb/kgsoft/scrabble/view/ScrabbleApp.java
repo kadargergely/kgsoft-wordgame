@@ -23,6 +23,7 @@ package hu.unideb.kgsoft.scrabble.view;
  */
 
 import hu.unideb.kgsoft.scrabble.Controller;
+import static hu.unideb.kgsoft.scrabble.Main.logger;
 
 import java.io.IOException;
 
@@ -36,8 +37,7 @@ import javafx.stage.Stage;
 
 public class ScrabbleApp extends Application {
     private Stage primaryStage;
-    private BorderPane rootLayout;
-    //TODO private AnchorPane loginRoot;
+    private BorderPane rootLayout;    
     
     private static Controller mainCtr;    
 
@@ -54,7 +54,8 @@ public class ScrabbleApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Bejelentkezés");
         
-        showLoginWindow();      
+        showLoginWindow();
+        logger.info("GUI started.");
     }
     
     public void initRootLayout() {
@@ -73,7 +74,10 @@ public class ScrabbleApp extends Application {
             menuBarController.setMainCtr(mainCtr);
             menuBarController.setMainApp(this);
             mainCtr.setMenuBarController(menuBarController);
+            
+            logger.info("/fxmls/RootLayout.fxml loaded.");
         } catch (IOException e) {
+        	logger.error("/fxmls/RootLayout.fxml couldn't be loaded.");
             e.printStackTrace();
         }
     }
@@ -91,7 +95,9 @@ public class ScrabbleApp extends Application {
             windowCtr.setMainCtr(mainCtr);
             mainCtr.setWindowCtr(windowCtr);
             
+            logger.info("/fxmls/ScrabbleGameWindow.fxml loaded.");
         } catch (IOException e) {
+        	logger.error("/fxmls/ScrabbleGameWindow.fxml couldn't be loaded.");
             e.printStackTrace();
         }
     }
@@ -112,8 +118,11 @@ public class ScrabbleApp extends Application {
             LoginWindowController loginCtr = loader.getController();
             loginCtr.setMainApp(this);
             loginCtr.setMainCtr(mainCtr);
-            mainCtr.setLoginController(loginCtr);            
+            mainCtr.setLoginController(loginCtr);
+            
+            logger.info("/fxmls/LoginWindow.fxml loaded.");
         } catch (IOException e) {
+        	logger.error("/fxmls/LoginWindow.fxml couldn't be loaded.");
             e.printStackTrace();
         }
     }
@@ -123,6 +132,7 @@ public class ScrabbleApp extends Application {
         
         initRootLayout();
         showScrabbleGameWindow();
+        logger.info("Switched to the game window.");
     }
     
     public Stage getPrimaryStage() {

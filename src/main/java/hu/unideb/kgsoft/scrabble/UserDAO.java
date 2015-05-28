@@ -80,7 +80,7 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			logger.warn("Couldn't connect to the database.");
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 
@@ -129,7 +129,7 @@ public class UserDAO {
 					processedPasswd));
 		} catch (SQLException e) {
 			logger.warn("Couldn't connect to the database.");
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 
