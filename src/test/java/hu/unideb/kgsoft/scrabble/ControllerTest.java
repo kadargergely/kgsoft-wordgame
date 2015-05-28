@@ -73,11 +73,5 @@ public class ControllerTest {
             }            
             assertEquals(remaining[tray.getLetters()[i]] + numOfSameOld - numOfSameNew, bag.getRemaining()[tray.getLetters()[i]]);
         }
-    }
-    
-    @Test
-    public void testInitNewGame() throws FileNotFoundException, UnsupportedEncodingException {
-    	Controller ctr = new Controller(new InputStreamReader(this.getClass().getResourceAsStream("/hu_HU.dic"), "UTF-8"));
-    	ctr.initNewGame();
-    }
+    }   
 }
