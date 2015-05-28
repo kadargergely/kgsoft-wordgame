@@ -23,7 +23,6 @@ package hu.unideb.kgsoft.scrabble.view;
  */
 
 import hu.unideb.kgsoft.scrabble.Controller;
-import static hu.unideb.kgsoft.scrabble.Main.logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

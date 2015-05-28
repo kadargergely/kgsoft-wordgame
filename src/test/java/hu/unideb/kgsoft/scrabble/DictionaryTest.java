@@ -39,5 +39,6 @@ public class DictionaryTest {
         assertFalse(dict.isCorrect("FTC"));
         assertFalse(dict.isCorrect("yard"));
         assertTrue(dict.getPlayableWords(DictWord.newWord("shakde_")).size() > 0);
+        assertTrue(dict.isCorrect("pék"));
     }
 }

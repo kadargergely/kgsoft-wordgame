@@ -71,8 +71,7 @@ public class ScrabbleApp extends Application {
             primaryStage.setResizable(false);
             
             MenuBarController menuBarController = loader.getController();
-            menuBarController.setMainCtr(mainCtr);
-            menuBarController.setMainApp(this);
+            menuBarController.setMainCtr(mainCtr);            
             mainCtr.setMenuBarController(menuBarController);
             
             logger.info("/fxmls/RootLayout.fxml loaded.");

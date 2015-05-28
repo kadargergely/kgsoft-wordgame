@@ -22,13 +22,9 @@ package hu.unideb.kgsoft.scrabble;
  * #L%
  */
 
-import static hu.unideb.kgsoft.scrabble.Main.logger;
-
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
-import javafx.application.Platform;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

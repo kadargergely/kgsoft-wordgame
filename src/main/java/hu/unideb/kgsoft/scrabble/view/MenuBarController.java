@@ -40,8 +40,7 @@ public class MenuBarController {
     @FXML
     private MenuItem switchUserMenuItem;
     
-    private Controller mainCtr;
-    private ScrabbleApp mainApp;
+    private Controller mainCtr;    
     
     /**
      * The constructor. The constructor is called before the initialize()
@@ -85,11 +84,7 @@ public class MenuBarController {
     
     public void setMainCtr(Controller mainCtr) {
         this.mainCtr = mainCtr;
-    }
-
-    public void setMainApp(ScrabbleApp mainApp) {
-        this.mainApp = mainApp;
-    }
+    }    
     
     public void saveGameDisabled(boolean value) {
         saveGameMenuItem.setDisable(value);
