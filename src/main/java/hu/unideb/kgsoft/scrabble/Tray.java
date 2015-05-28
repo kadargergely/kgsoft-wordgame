@@ -44,7 +44,7 @@ public class Tray {
 	 */
 	public static final int TRAY_SIZE = 7;
 	/**
-	 * The number of letters currently on the tray
+	 * The number of letters currently on the tray.
 	 */
 	private int numOfLetters;
 

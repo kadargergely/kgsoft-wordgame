@@ -35,11 +35,7 @@ import hu.unideb.kgsoft.scrabble.view.ScrabbleApp;
 public class Main {
 
     public static Logger logger = LoggerFactory.getLogger(Main.class);
-
-    /**
-     * 
-     * @param args
-     */
+    
     public static void main(String[] args) {
         logger.info("Application started.");
         String javaVersion = System.getProperty("java.runtime.version");

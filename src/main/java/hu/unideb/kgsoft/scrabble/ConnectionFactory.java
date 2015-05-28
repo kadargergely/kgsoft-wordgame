@@ -43,8 +43,14 @@ import static hu.unideb.kgsoft.scrabble.Main.logger;
  */
 public class ConnectionFactory {
 
+    /**
+     * A static instance of the {@code ConnectionFactory} class.
+     */
     private static ConnectionFactory factory = new ConnectionFactory();
 
+    /**
+     * Registers the Oracle driver.
+     */
     private ConnectionFactory() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
@@ -55,6 +61,16 @@ public class ConnectionFactory {
         }
     }
 
+    /**
+     * Reads a property file containing the user name and password for the
+     * Oracle server, and sets up the connection.
+     * 
+     * @return an {@code OracleConnection} object representing the connection to
+     *         the database
+     * @throws IOException
+     *             when the property file containing the user name and password
+     *             is missing
+     */
     private OracleConnection createConnection() throws IOException {
         Properties prop = new Properties();
         InputStream inputStream = this.getClass().getResourceAsStream(
