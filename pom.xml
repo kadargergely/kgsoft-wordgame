@@ -301,4 +301,11 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	<repositories>
+        <repository>
+            <id>local</id>
+            <url>file://${project.basedir}/lib</url>
+        </repository>
+    </repositories>
 </project>
