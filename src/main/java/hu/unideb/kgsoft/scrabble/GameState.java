@@ -29,7 +29,7 @@ import java.util.List;
  * Class for holding informations about the state of the game. An instance of
  * this class is used by the controller to communicate the changes of the game's
  * state to the view, which then displays these informations in a form, which is
- * independent by the controller.
+ * independent from the controller.
  */
 public class GameState {
 	private int computerScore;
