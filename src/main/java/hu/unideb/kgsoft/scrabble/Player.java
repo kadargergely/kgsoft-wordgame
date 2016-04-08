@@ -30,68 +30,46 @@ package hu.unideb.kgsoft.scrabble;
  * @author gergo
  *
  */
-public class Player {
+public interface Player {
 
-    private int score;
-    private Tray tray;
-    private int tileInHand;
+	/**
+	 * Returns the number of points gained by the player.
+	 * 
+	 * @return the number of points gained by the player
+	 */
+	public int getScore();
 
-    /**
-     * Construct a new <code>Player</code> object. Initializes it with no
-     * points, an empty tray and no tile in hand.
-     */
-    public Player() {
-        score = 0;
-        tray = new Tray();
-        tileInHand = -1;
-    }
+	/**
+	 * Sets the score of the player.
+	 * 
+	 * @param score
+	 *            the number of points to set
+	 */
+	public void setScore(int score);
 
-    /**
-     * Returns the number of points gained by the player.
-     * 
-     * @return the number of points gained by the player
-     */
-    public int getScore() {
-        return score;
-    }
+	/**
+	 * Returns the <code>Tray</code> object representing the tray of the player.
+	 * 
+	 * @return the <code>Tray</code> object of the <code>Player</code> object
+	 */
+	public Tray getTray();
 
-    /**
-     * Sets the score of the player.
-     * 
-     * @param score
-     *            the number of points to set
-     */
-    public void setScore(int score) {
-        this.score = score;
-    }
+	/**
+	 * Informs the <code>Player</code> instance, that his/her turn comes.
+	 */
+	public void giveTurn();
 
-    /**
-     * Returns the <code>Tray</code> object representing the tray of the player.
-     * 
-     * @return the <code>Tray</code> object of the <code>Player</code> object
-     */
-    public Tray getTray() {
-        return tray;
-    }
+	/**
+	 * Inform the <code>Player</code> instace of a new tile placed on the
+	 * gameboard.
+	 * 
+	 * @param gameState
+	 */
+	public void tilePlacedOnBoard(GameState gameState);
 
-    /**
-     * Returns the tile code of the tile which is currently in the hand of the
-     * player.
-     * 
-     * @return the tile code of the tile which is currently in the hand of the
-     *         player
-     */
-    public int getTileInHand() {
-        return tileInHand;
-    }
+	public void gameStarted(GameState gameState);
 
-    /**
-     * Sets the tile code of the tile which is currently in the hand of the
-     * player.
-     * @param tileInHand
-     *            the tile code to set
-     */
-    public void setTileInHand(int tileInHand) {
-        this.tileInHand = tileInHand;
-    }
+	public void gameEnded(GameState gameState);
+
+	public void otherPlayerEndedTurn(GameState gameState);
 }
