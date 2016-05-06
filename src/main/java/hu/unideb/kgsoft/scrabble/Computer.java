@@ -215,7 +215,7 @@ public class Computer {
 
             if (gboard.getFields()[i][j].getStatus() == Field.Status.EMPTY) {
                 if (jokerTileIndices.contains(k)) {
-                    gboard.setJokerTile(i, j, actLetterCode);
+                    gboard.setTile(i, j, actLetterCode, true);
                     tray.removeTile(Letters.JOKER_CODE);
                 } else {
                     gboard.setTile(i, j, actLetterCode);

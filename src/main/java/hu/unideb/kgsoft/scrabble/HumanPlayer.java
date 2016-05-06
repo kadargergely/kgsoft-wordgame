@@ -1,18 +1,14 @@
 package hu.unideb.kgsoft.scrabble;
 
-public class LocalPlayer implements Player {
+import hu.unideb.kgsoft.scrabble.view.GameWindowController;
 
-	@Override
-	public int getScore() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void setScore(int score) {
-		// TODO Auto-generated method stub
-		
-	}
+public class HumanPlayer implements Player {
+	
+	private String name;
+	private Tray tray;
+	private boolean playersTurn;
+	private GameWindowController view;
+	private GameServer server;
 
 	@Override
 	public Tray getTray() {

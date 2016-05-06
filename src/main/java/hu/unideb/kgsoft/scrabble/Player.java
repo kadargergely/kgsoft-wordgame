@@ -30,23 +30,12 @@ package hu.unideb.kgsoft.scrabble;
  * @author gergo
  *
  */
-public interface Player {
+public interface Player {	
 
-	/**
-	 * Returns the number of points gained by the player.
-	 * 
-	 * @return the number of points gained by the player
-	 */
-	public int getScore();
-
-	/**
-	 * Sets the score of the player.
-	 * 
-	 * @param score
-	 *            the number of points to set
-	 */
-	public void setScore(int score);
-
+	public String getName();
+	
+	public void setName();
+	
 	/**
 	 * Returns the <code>Tray</code> object representing the tray of the player.
 	 * 
@@ -60,12 +49,12 @@ public interface Player {
 	public void giveTurn();
 
 	/**
-	 * Inform the <code>Player</code> instace of a new tile placed on the
+	 * Inform the <code>Player</code> instance of a new tile placed on the
 	 * gameboard.
 	 * 
 	 * @param gameState
 	 */
-	public void tilePlacedOnBoard(GameState gameState);
+	public void tilePlacedOnBoard();
 
 	public void gameStarted(GameState gameState);
 

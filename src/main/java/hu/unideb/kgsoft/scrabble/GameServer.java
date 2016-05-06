@@ -2,7 +2,7 @@ package hu.unideb.kgsoft.scrabble;
 
 public interface GameServer {
 	
-	public void clickedOnGameBoard(int row, int col, int tileInHand);
+	public void registerPlayer(Player player);
 	
-	
+	public void setTileOnBoard(int row, int col, int tileCode);
 }

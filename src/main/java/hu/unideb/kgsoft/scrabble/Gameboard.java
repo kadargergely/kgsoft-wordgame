@@ -25,6 +25,9 @@ package hu.unideb.kgsoft.scrabble;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.unideb.kgsoft.scrabble.Field.Multiplier;
+import hu.unideb.kgsoft.scrabble.Field.Status;
+
 /**
  * The {@code Gameboard} class represents the board on which the players place
  * their tiles. An instance of this class stores informations about its fields
@@ -39,6 +42,199 @@ import java.util.List;
  */
 public class Gameboard {
 
+	/**
+	 * The possible statuses of a field in a turn.
+	 */
+	public enum FieldStatus {
+		/**
+		 * Means, there is no tile on the field.
+		 */
+		EMPTY,
+		/**
+		 * Means, there is a tile on the field placed in the current turn, and
+		 * can be picked up.
+		 */
+		MOVABLE,
+		/**
+		 * Means, there is a tile on the field placed in one of the preceding
+		 * turns and can't be moved.
+		 */
+		FIXED
+	}
+	
+	/**
+	 * The <code>Field</code> class represents a field of the game board.
+	 * <code>Field</code> objects contain the specific properties a field of the
+	 * game board can have.
+	 */
+	public static class Field {
+
+		
+
+		/**
+		 * The possible point multipliers a field can give.
+		 */
+		public enum Multiplier {
+			/**
+			 * Means, the field has no multiplier.
+			 */
+			NONE,
+			/**
+			 * Means, the field gives a double multiplier to the value of a word of
+			 * which letter is newly placed on this field.
+			 */
+			DWORD,
+			/**
+			 * Means, the field gives a triple multiplier to the value of a word of
+			 * which letter is newly placed on this field.
+			 */
+			TWORD,
+			/**
+			 * Means, the field gives a double multiplier to the value of a letter
+			 * newly placed on this field.
+			 */
+			DLETTER,
+			/**
+			 * Means, the field gives a triple multiplier to the value of a letter
+			 * newly placed on this field.
+			 */
+			TLETTER
+		}
+
+		/**
+		 * Constant, which is the <code>tileCode</code> of <code>Field</code>
+		 * objects with no tile on them.
+		 */
+		public static final int NOTILE = -1;
+
+		/**
+		 * The code of the tile on this field.
+		 */
+		private int tileCode;
+		/**
+		 * The status of this field in a turn.
+		 */
+		private FieldStatus status;
+		/**
+		 * The multiplier of the field.
+		 */
+		private Multiplier multiplier;
+		/**
+		 * The code of the tile which is replaced by a joker.
+		 */
+		private int jokerTileCode;
+
+		/**
+		 * Constructs a new <code>Field</code> object, and initializes it with no
+		 * tile and no multiplier.
+		 */
+		public Field() {
+			this.multiplier = Multiplier.NONE;
+			this.tileCode = NOTILE;
+			this.status = FieldStatus.EMPTY;
+			this.jokerTileCode = NOTILE;
+		}
+
+		/**
+		 * Constructs a new {@code Field} object with the given properties.
+		 * 
+		 * @param status
+		 *            the status of the field in the current turn
+		 * @param multiplier
+		 *            the point multiplier of the field
+		 * @param tileCode
+		 *            the code of the tile on the field
+		 * @param jokerTileCode
+		 *            the code of the tile represented by a joker on the field
+		 */
+		public Field(FieldStatus status, Multiplier multiplier, int tileCode,
+				int jokerTileCode) {
+			this.tileCode = tileCode;
+			this.multiplier = multiplier;
+			this.status = status;
+			this.jokerTileCode = jokerTileCode;
+		}
+
+		/**
+		 * Returns the tile code of the field.
+		 * 
+		 * @return the tile code of the field
+		 */
+		public int getTileCode() {
+			return tileCode;
+		}
+
+		/**
+		 * Sets the tile code of the field.
+		 * 
+		 * @param tileCode
+		 *            the tile code for the field
+		 */
+		public void setTileCode(int tileCode) {
+			this.tileCode = tileCode;
+		}
+
+		/**
+		 * Returns the multiplier of the field.
+		 * 
+		 * @return the multiplier of the field
+		 */
+		public Multiplier getMultiplier() {
+			return multiplier;
+		}
+
+		/**
+		 * Sets the multiplier of the field.
+		 * 
+		 * @param multiplier
+		 *            the multiplier for the field
+		 */
+		public void setMultiplier(Multiplier multiplier) {
+			this.multiplier = multiplier;
+		}
+
+		/**
+		 * Returns the status of the field in a turn.
+		 * 
+		 * @return the status of the field in a turn
+		 */
+		public FieldStatus getStatus() {
+			return status;
+		}
+
+		/**
+		 * Sets the status of the field in a turn.
+		 * 
+		 * @param status
+		 *            the status for the field in a turn
+		 */
+		public void setStatus(FieldStatus status) {
+			this.status = status;
+		}
+
+		/**
+		 * Returns the code of the tile which is replaced by a joker. Its value is
+		 * always <code>NOTILE</code>, unless a joker tile was placed on the field.
+		 * 
+		 * @return the code of the tile replaced by a joker
+		 */
+		public int getJokerTileCode() {
+			return jokerTileCode;
+		}
+
+		/**
+		 * Sets the code of the tile which is replaced by a joker. It should be
+		 * called when a joker tile is placed on the field, or picked up.
+		 * 
+		 * @param jokerTileCode
+		 *            the tile code to set
+		 */
+		public void setJokerTileCode(int jokerTileCode) {
+			this.jokerTileCode = jokerTileCode;
+		}
+
+	}
+	
 	/**
 	 * The number of fields in a row or column.
 	 */
@@ -158,10 +354,11 @@ public class Gameboard {
 		}
 	}
 
+	// TODO: replace javadoc comment
 	/**
 	 * If it is possible, places a tile at the given position on the board, with
-	 * a given tile code. If the tile is a joker, use the
-	 * <code>setJokerTile</code> method instead.
+	 * a given tile code. In case of joker tiles, the code should be the code of
+	 * the tile being replaced.
 	 * 
 	 * @param row
 	 *            the row index where the tile should be placed
@@ -169,12 +366,20 @@ public class Gameboard {
 	 *            the column index where the tile should be placed
 	 * @param code
 	 *            the code of the tile
+	 * @param joker
+	 *            if the tile is a joker, this should be set to
+	 *            <code>true</code>
 	 * @return <code>true</code> if the tile has been successfully placed on the
 	 *         board, <code>false</code> otherwise
 	 */
-	public boolean setTile(int row, int col, int code) {
+	public boolean setTile(int row, int col, int code, boolean joker) {
 		if (board[row][col].getStatus() == Field.Status.EMPTY) {
-			board[row][col].setTileCode(code);
+			if (!joker) {
+				board[row][col].setTileCode(code);
+			} else {
+				board[row][col].setTileCode(Letters.JOKER_CODE);
+				board[row][col].setJokerTileCode(code);
+			}
 			board[row][col].setStatus(Field.Status.MOVABLE);
 			movableTiles++;
 			return true;
@@ -183,6 +388,11 @@ public class Gameboard {
 		}
 	}
 
+	public boolean setTile(int row, int col, int code) {
+		return setTile(row, col, code, false);
+	}
+
+	// TODO remove
 	/**
 	 * If it is possible, places a joker at the given position, replacing the
 	 * given tile code.
@@ -292,11 +502,9 @@ public class Gameboard {
 						}
 						if (!connected && !firstTurn) {
 							if ((row > 0 && board[row - 1][j].getStatus() == Field.Status.FIXED)
-									|| (row < BOARD_SIZE - 1 && board[row + 1][j]
-											.getStatus() == Field.Status.FIXED)
+									|| (row < BOARD_SIZE - 1 && board[row + 1][j].getStatus() == Field.Status.FIXED)
 									|| (j > 0 && board[row][j - 1].getStatus() == Field.Status.FIXED)
-									|| (j < BOARD_SIZE - 1 && board[row][j + 1]
-											.getStatus() == Field.Status.FIXED)) {
+									|| (j < BOARD_SIZE - 1 && board[row][j + 1].getStatus() == Field.Status.FIXED)) {
 								connected = true;
 							}
 						}
@@ -319,11 +527,9 @@ public class Gameboard {
 						}
 						if (!connected && !firstTurn) {
 							if ((col > 0 && board[i][col - 1].getStatus() == Field.Status.FIXED)
-									|| (col < BOARD_SIZE - 1 && board[i][col + 1]
-											.getStatus() == Field.Status.FIXED)
+									|| (col < BOARD_SIZE - 1 && board[i][col + 1].getStatus() == Field.Status.FIXED)
 									|| (i > 0 && board[i - 1][col].getStatus() == Field.Status.FIXED)
-									|| (i < BOARD_SIZE - 1 && board[i + 1][col]
-											.getStatus() == Field.Status.FIXED)) {
+									|| (i < BOARD_SIZE - 1 && board[i + 1][col].getStatus() == Field.Status.FIXED)) {
 								connected = true;
 							}
 						}
@@ -339,11 +545,9 @@ public class Gameboard {
 			} else {
 				if (!connected && !firstTurn) {
 					if ((col > 0 && board[row][col - 1].getStatus() == Field.Status.FIXED)
-							|| (col < BOARD_SIZE - 1 && board[row][col + 1]
-									.getStatus() == Field.Status.FIXED)
+							|| (col < BOARD_SIZE - 1 && board[row][col + 1].getStatus() == Field.Status.FIXED)
 							|| (row > 0 && board[row - 1][col].getStatus() == Field.Status.FIXED)
-							|| (row < BOARD_SIZE - 1 && board[row + 1][col]
-									.getStatus() == Field.Status.FIXED)) {
+							|| (row < BOARD_SIZE - 1 && board[row + 1][col].getStatus() == Field.Status.FIXED)) {
 						connected = true;
 					}
 				}
@@ -497,11 +701,8 @@ public class Gameboard {
 					break;
 				} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 					String w = readColWord(row, j);
-					if (w.length() > 1
-							&& !(w.equals("CS") || w.equals("GY")
-									|| w.equals("LY") || w.equals("NY")
-									|| w.equals("SZ") || w.equals("TY") || w
-										.equals("ZS"))) {
+					if (w.length() > 1 && !(w.equals("CS") || w.equals("GY") || w.equals("LY") || w.equals("NY")
+							|| w.equals("SZ") || w.equals("TY") || w.equals("ZS"))) {
 						playedWords.add(w);
 					}
 				}
@@ -513,30 +714,21 @@ public class Gameboard {
 					break;
 				} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 					String w = readRowWord(i, col);
-					if (w.length() > 1
-							&& !(w.equals("CS") || w.equals("GY")
-									|| w.equals("LY") || w.equals("NY")
-									|| w.equals("SZ") || w.equals("TY") || w
-										.equals("ZS"))) {
+					if (w.length() > 1 && !(w.equals("CS") || w.equals("GY") || w.equals("LY") || w.equals("NY")
+							|| w.equals("SZ") || w.equals("TY") || w.equals("ZS"))) {
 						playedWords.add(w);
 					}
 				}
 			}
 		} else {
 			String rowWord = readRowWord(row, col);
-			if (rowWord.length() > 1
-					&& !(rowWord.equals("CS") || rowWord.equals("GY")
-							|| rowWord.equals("LY") || rowWord.equals("NY")
-							|| rowWord.equals("SZ") || rowWord.equals("TY") || rowWord
-								.equals("ZS"))) {
+			if (rowWord.length() > 1 && !(rowWord.equals("CS") || rowWord.equals("GY") || rowWord.equals("LY")
+					|| rowWord.equals("NY") || rowWord.equals("SZ") || rowWord.equals("TY") || rowWord.equals("ZS"))) {
 				playedWords.add(rowWord);
 			}
 			String colWord = readColWord(row, col);
-			if (colWord.length() > 1
-					&& !(colWord.equals("CS") || colWord.equals("GY")
-							|| colWord.equals("LY") || colWord.equals("NY")
-							|| colWord.equals("SZ") || colWord.equals("TY") || colWord
-								.equals("ZS"))) {
+			if (colWord.length() > 1 && !(colWord.equals("CS") || colWord.equals("GY") || colWord.equals("LY")
+					|| colWord.equals("NY") || colWord.equals("SZ") || colWord.equals("TY") || colWord.equals("ZS"))) {
 				playedWords.add(colWord);
 			}
 		}
@@ -592,16 +784,13 @@ public class Gameboard {
 			} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 				switch (board[row][j].getMultiplier()) {
 				case DLETTER:
-					pts += 2 * factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += 2 * factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				case TLETTER:
-					pts += 3 * factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += 3 * factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				default:
-					pts += factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				}
 			} else {
@@ -660,16 +849,13 @@ public class Gameboard {
 			} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 				switch (board[i][col].getMultiplier()) {
 				case DLETTER:
-					pts += 2 * factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += 2 * factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				case TLETTER:
-					pts += 3 * factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += 3 * factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				default:
-					pts += factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				}
 			} else {
@@ -736,8 +922,7 @@ public class Gameboard {
 					break;
 				} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 					if ((row != 0 && board[row - 1][j].getStatus() != Field.Status.EMPTY)
-							|| (row < BOARD_SIZE - 1 && board[row + 1][j]
-									.getStatus() != Field.Status.EMPTY)) {
+							|| (row < BOARD_SIZE - 1 && board[row + 1][j].getStatus() != Field.Status.EMPTY)) {
 						pts += calcColWordPts(row, j);
 					}
 				}
@@ -749,8 +934,7 @@ public class Gameboard {
 					break;
 				} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 					if ((col != 0 && board[i][col - 1].getStatus() != Field.Status.EMPTY)
-							|| (col < BOARD_SIZE - 1 && board[i][col + 1]
-									.getStatus() != Field.Status.EMPTY)) {
+							|| (col < BOARD_SIZE - 1 && board[i][col + 1].getStatus() != Field.Status.EMPTY)) {
 						pts += calcRowWordPts(i, col);
 					}
 				}
@@ -758,13 +942,11 @@ public class Gameboard {
 		} else {
 			if (board[row][col].getStatus() == Field.Status.MOVABLE) {
 				if ((row != 0 && board[row - 1][col].getStatus() != Field.Status.EMPTY)
-						|| (row < BOARD_SIZE - 1 && board[row + 1][col]
-								.getStatus() != Field.Status.EMPTY)) {
+						|| (row < BOARD_SIZE - 1 && board[row + 1][col].getStatus() != Field.Status.EMPTY)) {
 					pts += calcColWordPts(row, col);
 				}
 				if ((col != 0 && board[row][col - 1].getStatus() != Field.Status.EMPTY)
-						|| (col < BOARD_SIZE - 1 && board[row][col + 1]
-								.getStatus() != Field.Status.EMPTY)) {
+						|| (col < BOARD_SIZE - 1 && board[row][col + 1].getStatus() != Field.Status.EMPTY)) {
 					pts += calcRowWordPts(row, col);
 				}
 			}
@@ -780,7 +962,7 @@ public class Gameboard {
 	 */
 	public Field[][] getFields() {
 		return board;
-	}	
+	}
 
 	/**
 	 * Returns the number of tiles placed on the board in the current turn.
@@ -805,7 +987,7 @@ public class Gameboard {
 	 *         tiles placed on the board in the current turn, or there is at
 	 *         least one grammatically incorrect word.
 	 */
-	public boolean wordsAreCorrect(Dictionary dict) {		
+	public boolean wordsAreCorrect(Dictionary dict) {
 		List<String> playedWords = getPlayedWords();
 		if (playedWords == null) {
 			return false;
