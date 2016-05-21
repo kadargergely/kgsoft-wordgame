@@ -33,6 +33,7 @@ import hu.unideb.kgsoft.scrabble.Dictionary;
 import hu.unideb.kgsoft.scrabble.GameState;
 import hu.unideb.kgsoft.scrabble.GameView;
 import hu.unideb.kgsoft.scrabble.Gameboard;
+import hu.unideb.kgsoft.scrabble.model.db.DBConnectionException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -350,7 +351,7 @@ public class GameWindowController implements GameView {
     public void saveGameThread() {
         Task<Void> task = new Task<Void>() {
             @Override
-            protected Void call() throws Exception {                
+            protected Void call() throws DBConnectionException {                
                 mainCtr.saveGame();
                 return null;
             }
@@ -363,6 +364,10 @@ public class GameWindowController implements GameView {
                 if (newValue == Worker.State.SUCCEEDED) {
                     logger.info("Game saving process finished.");
                     mainCtr.gameSaved();
+                }
+                if (newValue == Worker.State.FAILED) {
+                	logger.info("Failed to save the game.");
+                	showErrorMessage("Kapcsolódási hiba", "Nem sikerült elérni az adatbázis szervert.");
                 }
             }
         });

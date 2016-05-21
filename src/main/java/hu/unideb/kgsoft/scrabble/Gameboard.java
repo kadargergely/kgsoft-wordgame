@@ -25,6 +25,8 @@ package hu.unideb.kgsoft.scrabble;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.unideb.kgsoft.scrabble.model.Field;
+
 /**
  * The {@code Gameboard} class represents the board on which the players place
  * their tiles. An instance of this class stores informations about its fields
@@ -67,76 +69,7 @@ public class Gameboard {
 
 		movableTiles = 0;
 
-		board[0][0].setMultiplier(Field.Multiplier.TWORD);
-		board[0][7].setMultiplier(Field.Multiplier.TWORD);
-		board[0][14].setMultiplier(Field.Multiplier.TWORD);
-		board[7][0].setMultiplier(Field.Multiplier.TWORD);
-		board[14][0].setMultiplier(Field.Multiplier.TWORD);
-		board[7][14].setMultiplier(Field.Multiplier.TWORD);
-		board[14][14].setMultiplier(Field.Multiplier.TWORD);
-		board[14][7].setMultiplier(Field.Multiplier.TWORD);
-
-		board[1][1].setMultiplier(Field.Multiplier.DWORD);
-		board[2][2].setMultiplier(Field.Multiplier.DWORD);
-		board[3][3].setMultiplier(Field.Multiplier.DWORD);
-		board[4][4].setMultiplier(Field.Multiplier.DWORD);
-
-		board[1][13].setMultiplier(Field.Multiplier.DWORD);
-		board[2][12].setMultiplier(Field.Multiplier.DWORD);
-		board[3][11].setMultiplier(Field.Multiplier.DWORD);
-		board[4][10].setMultiplier(Field.Multiplier.DWORD);
-
-		board[13][1].setMultiplier(Field.Multiplier.DWORD);
-		board[12][2].setMultiplier(Field.Multiplier.DWORD);
-		board[11][3].setMultiplier(Field.Multiplier.DWORD);
-		board[10][4].setMultiplier(Field.Multiplier.DWORD);
-
-		board[10][10].setMultiplier(Field.Multiplier.DWORD);
-		board[11][11].setMultiplier(Field.Multiplier.DWORD);
-		board[12][12].setMultiplier(Field.Multiplier.DWORD);
-		board[13][13].setMultiplier(Field.Multiplier.DWORD);
-
-		board[7][7].setMultiplier(Field.Multiplier.DWORD);
-
-		board[1][5].setMultiplier(Field.Multiplier.TLETTER);
-		board[1][9].setMultiplier(Field.Multiplier.TLETTER);
-		board[5][1].setMultiplier(Field.Multiplier.TLETTER);
-		board[5][5].setMultiplier(Field.Multiplier.TLETTER);
-		board[5][9].setMultiplier(Field.Multiplier.TLETTER);
-		board[5][13].setMultiplier(Field.Multiplier.TLETTER);
-		board[9][1].setMultiplier(Field.Multiplier.TLETTER);
-		board[9][5].setMultiplier(Field.Multiplier.TLETTER);
-		board[9][9].setMultiplier(Field.Multiplier.TLETTER);
-		board[9][13].setMultiplier(Field.Multiplier.TLETTER);
-		board[13][5].setMultiplier(Field.Multiplier.TLETTER);
-		board[13][9].setMultiplier(Field.Multiplier.TLETTER);
-
-		board[0][3].setMultiplier(Field.Multiplier.DLETTER);
-		board[0][11].setMultiplier(Field.Multiplier.DLETTER);
-		board[14][3].setMultiplier(Field.Multiplier.DLETTER);
-		board[14][11].setMultiplier(Field.Multiplier.DLETTER);
-		board[3][0].setMultiplier(Field.Multiplier.DLETTER);
-		board[11][0].setMultiplier(Field.Multiplier.DLETTER);
-		board[3][14].setMultiplier(Field.Multiplier.DLETTER);
-		board[11][14].setMultiplier(Field.Multiplier.DLETTER);
-
-		board[2][6].setMultiplier(Field.Multiplier.DLETTER);
-		board[2][8].setMultiplier(Field.Multiplier.DLETTER);
-		board[3][7].setMultiplier(Field.Multiplier.DLETTER);
-		board[6][2].setMultiplier(Field.Multiplier.DLETTER);
-		board[8][2].setMultiplier(Field.Multiplier.DLETTER);
-		board[7][3].setMultiplier(Field.Multiplier.DLETTER);
-		board[6][12].setMultiplier(Field.Multiplier.DLETTER);
-		board[8][12].setMultiplier(Field.Multiplier.DLETTER);
-		board[7][11].setMultiplier(Field.Multiplier.DLETTER);
-		board[12][6].setMultiplier(Field.Multiplier.DLETTER);
-		board[12][8].setMultiplier(Field.Multiplier.DLETTER);
-		board[11][7].setMultiplier(Field.Multiplier.DLETTER);
-
-		board[6][6].setMultiplier(Field.Multiplier.DLETTER);
-		board[8][8].setMultiplier(Field.Multiplier.DLETTER);
-		board[6][8].setMultiplier(Field.Multiplier.DLETTER);
-		board[8][6].setMultiplier(Field.Multiplier.DLETTER);
+		setMultipliers();
 	}
 
 	/**
@@ -292,11 +225,9 @@ public class Gameboard {
 						}
 						if (!connected && !firstTurn) {
 							if ((row > 0 && board[row - 1][j].getStatus() == Field.Status.FIXED)
-									|| (row < BOARD_SIZE - 1 && board[row + 1][j]
-											.getStatus() == Field.Status.FIXED)
+									|| (row < BOARD_SIZE - 1 && board[row + 1][j].getStatus() == Field.Status.FIXED)
 									|| (j > 0 && board[row][j - 1].getStatus() == Field.Status.FIXED)
-									|| (j < BOARD_SIZE - 1 && board[row][j + 1]
-											.getStatus() == Field.Status.FIXED)) {
+									|| (j < BOARD_SIZE - 1 && board[row][j + 1].getStatus() == Field.Status.FIXED)) {
 								connected = true;
 							}
 						}
@@ -319,11 +250,9 @@ public class Gameboard {
 						}
 						if (!connected && !firstTurn) {
 							if ((col > 0 && board[i][col - 1].getStatus() == Field.Status.FIXED)
-									|| (col < BOARD_SIZE - 1 && board[i][col + 1]
-											.getStatus() == Field.Status.FIXED)
+									|| (col < BOARD_SIZE - 1 && board[i][col + 1].getStatus() == Field.Status.FIXED)
 									|| (i > 0 && board[i - 1][col].getStatus() == Field.Status.FIXED)
-									|| (i < BOARD_SIZE - 1 && board[i + 1][col]
-											.getStatus() == Field.Status.FIXED)) {
+									|| (i < BOARD_SIZE - 1 && board[i + 1][col].getStatus() == Field.Status.FIXED)) {
 								connected = true;
 							}
 						}
@@ -339,11 +268,9 @@ public class Gameboard {
 			} else {
 				if (!connected && !firstTurn) {
 					if ((col > 0 && board[row][col - 1].getStatus() == Field.Status.FIXED)
-							|| (col < BOARD_SIZE - 1 && board[row][col + 1]
-									.getStatus() == Field.Status.FIXED)
+							|| (col < BOARD_SIZE - 1 && board[row][col + 1].getStatus() == Field.Status.FIXED)
 							|| (row > 0 && board[row - 1][col].getStatus() == Field.Status.FIXED)
-							|| (row < BOARD_SIZE - 1 && board[row + 1][col]
-									.getStatus() == Field.Status.FIXED)) {
+							|| (row < BOARD_SIZE - 1 && board[row + 1][col].getStatus() == Field.Status.FIXED)) {
 						connected = true;
 					}
 				}
@@ -359,6 +286,90 @@ public class Gameboard {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Sets the multipliers of the fields of the game board.
+	 */
+	public void setMultipliers() {		
+		board[0][0].setMultiplier(Field.Multiplier.TWORD);
+		board[0][7].setMultiplier(Field.Multiplier.TWORD);
+		board[0][14].setMultiplier(Field.Multiplier.TWORD);
+		board[7][0].setMultiplier(Field.Multiplier.TWORD);
+		board[14][0].setMultiplier(Field.Multiplier.TWORD);
+		board[7][14].setMultiplier(Field.Multiplier.TWORD);
+		board[14][14].setMultiplier(Field.Multiplier.TWORD);
+		board[14][7].setMultiplier(Field.Multiplier.TWORD);
+
+		board[1][1].setMultiplier(Field.Multiplier.DWORD);
+		board[2][2].setMultiplier(Field.Multiplier.DWORD);
+		board[3][3].setMultiplier(Field.Multiplier.DWORD);
+		board[4][4].setMultiplier(Field.Multiplier.DWORD);
+
+		board[1][13].setMultiplier(Field.Multiplier.DWORD);
+		board[2][12].setMultiplier(Field.Multiplier.DWORD);
+		board[3][11].setMultiplier(Field.Multiplier.DWORD);
+		board[4][10].setMultiplier(Field.Multiplier.DWORD);
+
+		board[13][1].setMultiplier(Field.Multiplier.DWORD);
+		board[12][2].setMultiplier(Field.Multiplier.DWORD);
+		board[11][3].setMultiplier(Field.Multiplier.DWORD);
+		board[10][4].setMultiplier(Field.Multiplier.DWORD);
+
+		board[10][10].setMultiplier(Field.Multiplier.DWORD);
+		board[11][11].setMultiplier(Field.Multiplier.DWORD);
+		board[12][12].setMultiplier(Field.Multiplier.DWORD);
+		board[13][13].setMultiplier(Field.Multiplier.DWORD);
+
+		board[7][7].setMultiplier(Field.Multiplier.DWORD);
+
+		board[1][5].setMultiplier(Field.Multiplier.TLETTER);
+		board[1][9].setMultiplier(Field.Multiplier.TLETTER);
+		board[5][1].setMultiplier(Field.Multiplier.TLETTER);
+		board[5][5].setMultiplier(Field.Multiplier.TLETTER);
+		board[5][9].setMultiplier(Field.Multiplier.TLETTER);
+		board[5][13].setMultiplier(Field.Multiplier.TLETTER);
+		board[9][1].setMultiplier(Field.Multiplier.TLETTER);
+		board[9][5].setMultiplier(Field.Multiplier.TLETTER);
+		board[9][9].setMultiplier(Field.Multiplier.TLETTER);
+		board[9][13].setMultiplier(Field.Multiplier.TLETTER);
+		board[13][5].setMultiplier(Field.Multiplier.TLETTER);
+		board[13][9].setMultiplier(Field.Multiplier.TLETTER);
+
+		board[0][3].setMultiplier(Field.Multiplier.DLETTER);
+		board[0][11].setMultiplier(Field.Multiplier.DLETTER);
+		board[14][3].setMultiplier(Field.Multiplier.DLETTER);
+		board[14][11].setMultiplier(Field.Multiplier.DLETTER);
+		board[3][0].setMultiplier(Field.Multiplier.DLETTER);
+		board[11][0].setMultiplier(Field.Multiplier.DLETTER);
+		board[3][14].setMultiplier(Field.Multiplier.DLETTER);
+		board[11][14].setMultiplier(Field.Multiplier.DLETTER);
+
+		board[2][6].setMultiplier(Field.Multiplier.DLETTER);
+		board[2][8].setMultiplier(Field.Multiplier.DLETTER);
+		board[3][7].setMultiplier(Field.Multiplier.DLETTER);
+		board[6][2].setMultiplier(Field.Multiplier.DLETTER);
+		board[8][2].setMultiplier(Field.Multiplier.DLETTER);
+		board[7][3].setMultiplier(Field.Multiplier.DLETTER);
+		board[6][12].setMultiplier(Field.Multiplier.DLETTER);
+		board[8][12].setMultiplier(Field.Multiplier.DLETTER);
+		board[7][11].setMultiplier(Field.Multiplier.DLETTER);
+		board[12][6].setMultiplier(Field.Multiplier.DLETTER);
+		board[12][8].setMultiplier(Field.Multiplier.DLETTER);
+		board[11][7].setMultiplier(Field.Multiplier.DLETTER);
+
+		board[6][6].setMultiplier(Field.Multiplier.DLETTER);
+		board[8][8].setMultiplier(Field.Multiplier.DLETTER);
+		board[6][8].setMultiplier(Field.Multiplier.DLETTER);
+		board[8][6].setMultiplier(Field.Multiplier.DLETTER);
+		
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				if (board[i][j].getMultiplier() == null) {
+					board[i][j].setMultiplier(Field.Multiplier.NONE);
+				}
+			}
+		}
 	}
 
 	/**
@@ -497,11 +508,8 @@ public class Gameboard {
 					break;
 				} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 					String w = readColWord(row, j);
-					if (w.length() > 1
-							&& !(w.equals("CS") || w.equals("GY")
-									|| w.equals("LY") || w.equals("NY")
-									|| w.equals("SZ") || w.equals("TY") || w
-										.equals("ZS"))) {
+					if (w.length() > 1 && !(w.equals("CS") || w.equals("GY") || w.equals("LY") || w.equals("NY")
+							|| w.equals("SZ") || w.equals("TY") || w.equals("ZS"))) {
 						playedWords.add(w);
 					}
 				}
@@ -513,30 +521,21 @@ public class Gameboard {
 					break;
 				} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 					String w = readRowWord(i, col);
-					if (w.length() > 1
-							&& !(w.equals("CS") || w.equals("GY")
-									|| w.equals("LY") || w.equals("NY")
-									|| w.equals("SZ") || w.equals("TY") || w
-										.equals("ZS"))) {
+					if (w.length() > 1 && !(w.equals("CS") || w.equals("GY") || w.equals("LY") || w.equals("NY")
+							|| w.equals("SZ") || w.equals("TY") || w.equals("ZS"))) {
 						playedWords.add(w);
 					}
 				}
 			}
 		} else {
 			String rowWord = readRowWord(row, col);
-			if (rowWord.length() > 1
-					&& !(rowWord.equals("CS") || rowWord.equals("GY")
-							|| rowWord.equals("LY") || rowWord.equals("NY")
-							|| rowWord.equals("SZ") || rowWord.equals("TY") || rowWord
-								.equals("ZS"))) {
+			if (rowWord.length() > 1 && !(rowWord.equals("CS") || rowWord.equals("GY") || rowWord.equals("LY")
+					|| rowWord.equals("NY") || rowWord.equals("SZ") || rowWord.equals("TY") || rowWord.equals("ZS"))) {
 				playedWords.add(rowWord);
 			}
 			String colWord = readColWord(row, col);
-			if (colWord.length() > 1
-					&& !(colWord.equals("CS") || colWord.equals("GY")
-							|| colWord.equals("LY") || colWord.equals("NY")
-							|| colWord.equals("SZ") || colWord.equals("TY") || colWord
-								.equals("ZS"))) {
+			if (colWord.length() > 1 && !(colWord.equals("CS") || colWord.equals("GY") || colWord.equals("LY")
+					|| colWord.equals("NY") || colWord.equals("SZ") || colWord.equals("TY") || colWord.equals("ZS"))) {
 				playedWords.add(colWord);
 			}
 		}
@@ -558,7 +557,7 @@ public class Gameboard {
 	private int calcRowWordPts(int row, int col) {
 		int startCol = 0;
 		int pts = 0;
-		int factor = 1;
+		int factor = 1;		
 
 		if (board[row][col].getStatus() == Field.Status.EMPTY) {
 			return 0;
@@ -592,16 +591,13 @@ public class Gameboard {
 			} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 				switch (board[row][j].getMultiplier()) {
 				case DLETTER:
-					pts += 2 * factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += 2 * factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				case TLETTER:
-					pts += 3 * factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += 3 * factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				default:
-					pts += factor
-							* Letters.getValue(board[row][j].getTileCode());
+					pts += factor * Letters.getValue(board[row][j].getTileCode());
 					break;
 				}
 			} else {
@@ -660,16 +656,13 @@ public class Gameboard {
 			} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 				switch (board[i][col].getMultiplier()) {
 				case DLETTER:
-					pts += 2 * factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += 2 * factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				case TLETTER:
-					pts += 3 * factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += 3 * factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				default:
-					pts += factor
-							* Letters.getValue(board[i][col].getTileCode());
+					pts += factor * Letters.getValue(board[i][col].getTileCode());
 					break;
 				}
 			} else {
@@ -736,8 +729,7 @@ public class Gameboard {
 					break;
 				} else if (board[row][j].getStatus() == Field.Status.MOVABLE) {
 					if ((row != 0 && board[row - 1][j].getStatus() != Field.Status.EMPTY)
-							|| (row < BOARD_SIZE - 1 && board[row + 1][j]
-									.getStatus() != Field.Status.EMPTY)) {
+							|| (row < BOARD_SIZE - 1 && board[row + 1][j].getStatus() != Field.Status.EMPTY)) {
 						pts += calcColWordPts(row, j);
 					}
 				}
@@ -749,8 +741,7 @@ public class Gameboard {
 					break;
 				} else if (board[i][col].getStatus() == Field.Status.MOVABLE) {
 					if ((col != 0 && board[i][col - 1].getStatus() != Field.Status.EMPTY)
-							|| (col < BOARD_SIZE - 1 && board[i][col + 1]
-									.getStatus() != Field.Status.EMPTY)) {
+							|| (col < BOARD_SIZE - 1 && board[i][col + 1].getStatus() != Field.Status.EMPTY)) {
 						pts += calcRowWordPts(i, col);
 					}
 				}
@@ -758,13 +749,11 @@ public class Gameboard {
 		} else {
 			if (board[row][col].getStatus() == Field.Status.MOVABLE) {
 				if ((row != 0 && board[row - 1][col].getStatus() != Field.Status.EMPTY)
-						|| (row < BOARD_SIZE - 1 && board[row + 1][col]
-								.getStatus() != Field.Status.EMPTY)) {
+						|| (row < BOARD_SIZE - 1 && board[row + 1][col].getStatus() != Field.Status.EMPTY)) {
 					pts += calcColWordPts(row, col);
 				}
 				if ((col != 0 && board[row][col - 1].getStatus() != Field.Status.EMPTY)
-						|| (col < BOARD_SIZE - 1 && board[row][col + 1]
-								.getStatus() != Field.Status.EMPTY)) {
+						|| (col < BOARD_SIZE - 1 && board[row][col + 1].getStatus() != Field.Status.EMPTY)) {
 					pts += calcRowWordPts(row, col);
 				}
 			}
@@ -780,7 +769,7 @@ public class Gameboard {
 	 */
 	public Field[][] getFields() {
 		return board;
-	}	
+	}
 
 	/**
 	 * Returns the number of tiles placed on the board in the current turn.
@@ -805,7 +794,7 @@ public class Gameboard {
 	 *         tiles placed on the board in the current turn, or there is at
 	 *         least one grammatically incorrect word.
 	 */
-	public boolean wordsAreCorrect(Dictionary dict) {		
+	public boolean wordsAreCorrect(Dictionary dict) {
 		List<String> playedWords = getPlayedWords();
 		if (playedWords == null) {
 			return false;

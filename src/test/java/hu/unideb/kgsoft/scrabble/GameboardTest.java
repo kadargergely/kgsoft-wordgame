@@ -23,6 +23,7 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import hu.unideb.kgsoft.scrabble.Gameboard;
+import hu.unideb.kgsoft.scrabble.model.Field;
 
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;

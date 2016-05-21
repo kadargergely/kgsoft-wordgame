@@ -3,4 +3,4 @@
 .settings/
 target/
 *.log
-src/main/resources/oracleUser.properties
+src/main/resources/META-INF/persistence.xml

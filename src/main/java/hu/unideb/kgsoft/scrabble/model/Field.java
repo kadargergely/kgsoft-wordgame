@@ -1,4 +1,4 @@
-package hu.unideb.kgsoft.scrabble;
+package hu.unideb.kgsoft.scrabble.model;
 
 /*
  * #%L
@@ -84,7 +84,7 @@ public class Field {
 	 * objects with no tile on them.
 	 */
 	public static final int NOTILE = -1;
-
+	
 	/**
 	 * The code of the tile on this field.
 	 */

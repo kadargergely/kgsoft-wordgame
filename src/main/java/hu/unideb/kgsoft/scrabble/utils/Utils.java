@@ -26,6 +26,8 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static hu.unideb.kgsoft.scrabble.Main.logger;
 
@@ -131,6 +133,41 @@ public class Utils {
 		StringJoiner sj = new StringJoiner("', '", "'", "'");
 		for (String str : strArray) {
 			sj.add(str);
+		}
+		return sj.toString();
+	}
+
+	/**
+	 * Splits a string containing integers with a delimiter.
+	 * 
+	 * @param str
+	 *            the string containing the integers
+	 * @param delimiter
+	 *            the string delimiting the integers in the string
+	 * @return the {@code int} array containing the integers from the string
+	 */
+	public static int[] stringToIntArray(String str, String delimiter) {
+		String[] splittedString = str.split(delimiter);
+		int[] intArray = new int[splittedString.length];
+		for (int i = 0; i < intArray.length; i++) {
+			intArray[i] = Integer.valueOf(splittedString[i]);
+		}
+		return intArray;
+	}
+	
+	/**
+	 * Concatenates the elements of an {@code int[]} in a string.
+	 * 
+	 * @param array
+	 *            the array containing the integers
+	 * @param delimiter
+	 *            the string delimiting the integers in the string
+	 * @return the string containing the integers from the array
+	 */
+	public static String intArrayToString(int[] array, String delimiter) {
+		StringJoiner sj = new StringJoiner(delimiter);
+		for (int i : array) {
+			sj.add(String.valueOf(i));
 		}
 		return sj.toString();
 	}

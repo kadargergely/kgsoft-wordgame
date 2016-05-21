@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import hu.unideb.kgsoft.scrabble.model.Field;
+
 import static hu.unideb.kgsoft.scrabble.Main.logger;
 
 /**
