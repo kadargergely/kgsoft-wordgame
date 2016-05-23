@@ -28,6 +28,9 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
+import hu.unideb.kgsoft.scrabble.model.DictWord;
+import hu.unideb.kgsoft.scrabble.model.Dictionary;
+
 import static org.junit.Assert.*;
 
 public class DictionaryTest {

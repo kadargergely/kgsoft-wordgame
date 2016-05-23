@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import hu.unideb.kgsoft.scrabble.model.Tray;
+
 public class TrayTest {
 	
 	@Test

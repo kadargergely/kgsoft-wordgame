@@ -9,6 +9,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import hu.unideb.kgsoft.scrabble.model.Computer;
+import hu.unideb.kgsoft.scrabble.model.Dictionary;
+import hu.unideb.kgsoft.scrabble.model.Gameboard;
+
 public class ComputerTest {
 
 	@Test

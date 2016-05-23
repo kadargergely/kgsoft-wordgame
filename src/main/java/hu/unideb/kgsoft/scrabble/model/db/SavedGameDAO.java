@@ -7,8 +7,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import hu.unideb.kgsoft.scrabble.NoSavedGameException;
 import hu.unideb.kgsoft.scrabble.model.FieldEntity;
+import hu.unideb.kgsoft.scrabble.model.NoSavedGameException;
 import hu.unideb.kgsoft.scrabble.model.SavedGame;
 import hu.unideb.kgsoft.scrabble.model.UserEntity;
 

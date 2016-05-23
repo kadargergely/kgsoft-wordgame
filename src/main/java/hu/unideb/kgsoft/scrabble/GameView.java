@@ -1,5 +1,7 @@
 package hu.unideb.kgsoft.scrabble;
 
+import hu.unideb.kgsoft.scrabble.model.GameState;
+
 /*
  * #%L
  * kgsoft-scrabble

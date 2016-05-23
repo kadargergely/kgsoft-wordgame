@@ -1,6 +1,15 @@
 package hu.unideb.kgsoft.scrabble;
 
+import hu.unideb.kgsoft.scrabble.model.Bag;
+import hu.unideb.kgsoft.scrabble.model.Computer;
+import hu.unideb.kgsoft.scrabble.model.Dictionary;
+import hu.unideb.kgsoft.scrabble.model.ExistingUserException;
 import hu.unideb.kgsoft.scrabble.model.Field;
+import hu.unideb.kgsoft.scrabble.model.GameState;
+import hu.unideb.kgsoft.scrabble.model.Gameboard;
+import hu.unideb.kgsoft.scrabble.model.Letters;
+import hu.unideb.kgsoft.scrabble.model.NoSavedGameException;
+import hu.unideb.kgsoft.scrabble.model.Player;
 
 /*
  * #%L
@@ -25,6 +34,7 @@ import hu.unideb.kgsoft.scrabble.model.Field;
  */
 
 import hu.unideb.kgsoft.scrabble.model.SavedGame;
+import hu.unideb.kgsoft.scrabble.model.Tray;
 import hu.unideb.kgsoft.scrabble.model.db.DBConnectionException;
 import hu.unideb.kgsoft.scrabble.model.db.SavedGameDAO;
 import hu.unideb.kgsoft.scrabble.model.db.UserDAO;

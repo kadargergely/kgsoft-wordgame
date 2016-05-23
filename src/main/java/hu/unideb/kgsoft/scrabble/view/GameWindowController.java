@@ -27,12 +27,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-import hu.unideb.kgsoft.scrabble.Computer;
 import hu.unideb.kgsoft.scrabble.Controller;
-import hu.unideb.kgsoft.scrabble.Dictionary;
-import hu.unideb.kgsoft.scrabble.GameState;
 import hu.unideb.kgsoft.scrabble.GameView;
-import hu.unideb.kgsoft.scrabble.Gameboard;
+import hu.unideb.kgsoft.scrabble.model.Computer;
+import hu.unideb.kgsoft.scrabble.model.Dictionary;
+import hu.unideb.kgsoft.scrabble.model.GameState;
+import hu.unideb.kgsoft.scrabble.model.Gameboard;
 import hu.unideb.kgsoft.scrabble.model.db.DBConnectionException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -1,4 +1,4 @@
-package hu.unideb.kgsoft.scrabble;
+package hu.unideb.kgsoft.scrabble.model;
 
 /*
  * #%L

@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import hu.unideb.kgsoft.scrabble.ExistingUserException;
+import hu.unideb.kgsoft.scrabble.model.ExistingUserException;
 import hu.unideb.kgsoft.scrabble.model.UserEntity;
 import hu.unideb.kgsoft.scrabble.utils.Utils;
 

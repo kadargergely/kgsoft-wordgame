@@ -28,6 +28,10 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
+import hu.unideb.kgsoft.scrabble.model.Bag;
+import hu.unideb.kgsoft.scrabble.model.Player;
+import hu.unideb.kgsoft.scrabble.model.Tray;
+
 import static org.junit.Assert.*;
 
 public class ControllerTest {    

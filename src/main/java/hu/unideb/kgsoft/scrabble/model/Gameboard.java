@@ -1,4 +1,4 @@
-package hu.unideb.kgsoft.scrabble;
+package hu.unideb.kgsoft.scrabble.model;
 
 /*
  * #%L
@@ -24,8 +24,6 @@ package hu.unideb.kgsoft.scrabble;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import hu.unideb.kgsoft.scrabble.model.Field;
 
 /**
  * The {@code Gameboard} class represents the board on which the players place

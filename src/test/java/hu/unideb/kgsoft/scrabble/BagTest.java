@@ -23,9 +23,10 @@ package hu.unideb.kgsoft.scrabble;
  */
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import hu.unideb.kgsoft.scrabble.Bag;
+import hu.unideb.kgsoft.scrabble.model.Bag;
+
+import static org.junit.Assert.*;
 
 public class BagTest {        
 
